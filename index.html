@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Trending TikTok products with free shipping.">
+<title>Feed Finds Shop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: sticky shop bar, short promise strip, 2-to-4 column product grid, slide-in cart drawer, policy footer */
+:root {
+  --bg: #fbfafc;
+  --surface: #ffffff;
+  --ink: #17141f;
+  --muted: #6b6578;
+  --line: #e7e3ee;
+  --accent: #ff2d6f;
+  --accent-ink: #ffffff;
+  --cyan: #12b5c9;
+  --tile: #f2eef8;
+  --ok: #1a8f5a;
+  --display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --body: "Figtree", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121018; --surface: #1b1823; --ink: #f3f0f8; --muted: #a59fb3; --line: #2c2836;
+    --accent: #ff4d84; --accent-ink: #16050b; --cyan: #3fd3e4; --tile: #24202e; --ok: #4cc98d;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121018; --surface: #1b1823; --ink: #f3f0f8; --muted: #a59fb3; --line: #2c2836;
+  --accent: #ff4d84; --accent-ink: #16050b; --cyan: #3fd3e4; --tile: #24202e; --ok: #4cc98d;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { background: var(--bg); color: var(--ink); font: 400 16px/1.55 var(--body); margin: 0; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 16px; }
+a { color: inherit; }
+button { font: inherit; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 12px; }
+.logo { font: 800 22px/1 var(--display); letter-spacing: -0.02em; text-decoration: none; }
+.logo span { color: var(--accent); }
+.cart-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--ink); color: var(--bg); border: 0; border-radius: 999px; padding: 9px 16px; font-weight: 600; }
+.cart-btn b { background: var(--accent); color: var(--accent-ink); border-radius: 999px; min-width: 22px; padding: 0 6px; font: 500 13px/22px var(--mono); text-align: center; }
+
+.hero { padding-block: 40px 24px; display: grid; gap: 12px; }
+.eyebrow { font: 500 12px/1 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--cyan); }
+.hero h1 { font: 800 clamp(34px, 6vw, 60px)/1.02 var(--display); letter-spacing: -0.03em; margin: 0; max-width: 16ch; text-wrap: balance; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero p { margin: 0; color: var(--muted); max-width: 56ch; font-size: 17px; }
+.promises { display: flex; flex-wrap: wrap; gap: 8px 20px; padding-block: 8px 28px; font-size: 14px; color: var(--muted); }
+.promises span::before { content: "✓ "; color: var(--ok); font-weight: 600; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 18px; padding-bottom: 56px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; }
+.thumb { position: relative; aspect-ratio: 1 / 1; max-width: 100%; background: var(--tile); display: grid; place-items: center; }
+.thumb img { width: 100%; height: 100%; object-fit: cover; }
+.thumb svg { width: 44%; height: 44%; stroke: var(--ink); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.thumb svg .hot { stroke: var(--accent); }
+.rank { position: absolute; top: 10px; left: 10px; font: 500 12px/1 var(--mono); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 5px 9px; }
+.info { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 0; }
+.info h3 { margin: 0; font: 600 18px/1.2 var(--display); letter-spacing: -0.01em; text-wrap: balance; }
+.info p { margin: 0; color: var(--muted); font-size: 14px; flex: 1; }
+.buy { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 8px; }
+.price { white-space: nowrap; font: 500 17px/1 var(--mono); font-variant-numeric: tabular-nums; }
+.price s { display: block; margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+.add { white-space: nowrap; background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 999px; padding: 9px 16px; font-weight: 600; font-size: 14px; }
+.add:active { transform: scale(0.97); }
+
+.drawer-bg { position: fixed; inset: 0; background: rgba(10, 8, 16, 0.45); z-index: 20; }
+.drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(420px, 100%); background: var(--surface); z-index: 21; display: flex; flex-direction: column; padding: calc(16px + env(safe-area-inset-top, 0px)) 18px calc(16px + env(safe-area-inset-bottom, 0px)); gap: 12px; border-left: 1px solid var(--line); }
+.drawer header { display: flex; justify-content: space-between; align-items: center; }
+.drawer h2 { margin: 0; font: 800 24px/1 var(--display); }
+.x { background: none; border: 1px solid var(--line); color: var(--ink); border-radius: 999px; width: 36px; height: 36px; }
+.lines { flex: 1; overflow-y: auto; display: grid; align-content: start; gap: 10px; }
+.line { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+.line .name { font-weight: 600; min-width: 0; }
+.qty { display: inline-flex; align-items: center; gap: 8px; font: 500 14px var(--mono); }
+.qty button { width: 28px; height: 28px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); }
+.totals { display: grid; gap: 4px; font-variant-numeric: tabular-nums; }
+.totals div { display: flex; justify-content: space-between; }
+.totals .grand { font: 800 20px/1.3 var(--display); }
+.note { font-size: 13px; color: var(--muted); }
+.empty { color: var(--muted); padding-block: 24px; }
+#paypal-buttons { min-height: 48px; }
+.fallback { border: 1px dashed var(--line); border-radius: 12px; padding: 12px; font-size: 14px; color: var(--muted); }
+.thanks { display: grid; gap: 8px; padding-block: 24px; }
+.thanks h3 { margin: 0; font: 800 26px/1.1 var(--display); color: var(--ok); }
+
+footer { border-top: 1px solid var(--line); padding-block: 32px 48px; color: var(--muted); font-size: 14px; }
+footer .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px 28px; }
+footer details { border-bottom: 1px solid var(--line); padding-block: 10px; }
+footer summary { cursor: pointer; color: var(--ink); font-weight: 600; }
+footer p { margin: 8px 0 0; max-width: 65ch; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="logo" href="#top" id="logo">Feed<span>Finds</span></a>
+    <button class="cart-btn" id="open-cart" type="button" aria-label="Open cart">Cart <b id="count">0</b></button>
+  </div>
+</header>
+
+<main class="wrap" id="top">
+  <section class="hero">
+    <div class="eyebrow">Trending on TikTok · updated Oct 2026</div>
+    <h1>The things your <em>For You page</em> won't stop showing you.</h1>
+    <p>Ten products people keep buying straight off their feeds, picked from this year's TikTok Shop and ad data. Free shipping on every order.</p>
+  </section>
+  <div class="promises"><span>Free tracked shipping</span><span>30-day returns</span><span>Pay with PayPal, debit or credit card</span></div>
+  <section class="grid" id="grid" aria-label="Products"></section>
+</main>
+
+<footer>
+  <div class="wrap cols">
+    <div>
+      <details id="shipping"><summary>Shipping policy</summary><p>Orders are processed within 1–3 business days and ship from our partner warehouses. Most US orders arrive in 7–12 business days. You get a tracking number by email as soon as your order ships.</p></details>
+      <details id="returns"><summary>Returns &amp; refunds</summary><p>Not happy? Email us within 30 days of delivery for a refund or replacement. Items that arrive damaged or defective are replaced free; send a photo and your order number.</p></details>
+    </div>
+    <div>
+      <details id="privacy"><summary>Privacy</summary><p>We only use your name, address and email to fulfil and track your order. Payments are handled by PayPal; we never see or store your card number.</p></details>
+      <details id="contact"><summary>Contact</summary><p>Email <span id="contact-email"></span>. We reply within one business day.</p></details>
+    </div>
+  </div>
+  <div class="wrap"><p>© <span id="year"></span> <span id="store-name"></span></p></div>
+</footer>
+
+<div class="drawer-bg" id="drawer-bg" hidden></div>
+<aside class="drawer" id="drawer" hidden aria-label="Cart">
+  <header><h2>Your cart</h2><button class="x" id="close-cart" type="button" aria-label="Close cart">✕</button></header>
+  <div class="lines" id="lines"></div>
+  <div class="totals" id="totals"></div>
+  <div id="paypal-buttons"></div>
+  <div class="fallback" id="pay-fallback" hidden>Checkout buttons load on your live site once your PayPal Client ID is set in the store settings.</div>
+  <div class="note">Secure checkout by PayPal. No PayPal account needed: choose “Debit or Credit Card”.</div>
+</aside>
+
+<script>
+/* ===== STORE SETTINGS: edit these ===== */
+const STORE = {
+  name: "FeedFinds",
+  contactEmail: "support@yourstore.com",
+  currency: "USD",
+  // Paste your PayPal REST app Client ID here (developer.paypal.com > Apps & Credentials).
+  // "test" runs PayPal's sandbox so you can try checkout with fake money.
+  paypalClientId: "test"
+};
+
+/* ===== PRODUCTS: change prices, names, or add a photo URL in `img` ===== */
+const PRODUCTS = [
+  { id: "magsafe-powerbank", name: "Magnetic Snap-On Power Bank", blurb: "10,000mAh wireless pack that clicks onto the back of your phone. No cables in your pocket.", price: 34.99, was: 49.99, img: "", icon: "battery" },
+  { id: "privacy-screen", name: "Privacy Screen Protector (2-pack)", blurb: "Tempered glass that goes dark from the side, so the person next to you can't read your texts.", price: 14.99, was: 24.99, img: "", icon: "phone" },
+  { id: "posture-corrector", name: "Adjustable Posture Corrector", blurb: "Breathable back brace that pulls your shoulders back while you work or scroll.", price: 24.99, was: 39.99, img: "", icon: "posture" },
+  { id: "sunset-lamp", name: "Sunset Projection Lamp", blurb: "The golden-hour glow from every room tour video. USB powered, 180° rotating head.", price: 22.99, was: 34.99, img: "", icon: "sun" },
+  { id: "tumbler-40oz", name: "40oz Insulated Tumbler", blurb: "Handle, straw lid, fits in a cup holder. Ice still there the next morning.", price: 27.99, was: 39.99, img: "", icon: "cup" },
+  { id: "earbuds", name: "Wireless Noise-Cancel Earbuds", blurb: "Bluetooth 5.3, 30-hour case battery, touch controls and call noise reduction.", price: 29.99, was: 59.99, img: "", icon: "buds" },
+  { id: "toiletry-bag", name: "Hanging Travel Toiletry Bag", blurb: "Unzips into four clear pockets and hangs on a hook. The packing-video favourite.", price: 21.99, was: 32.99, img: "", icon: "bag" },
+  { id: "spin-scrubber", name: "Cordless Electric Spin Scrubber", blurb: "Rechargeable scrubber with 5 brush heads for grout, tubs and stovetops. The #CleanTok staple.", price: 39.99, was: 59.99, img: "", icon: "scrub" },
+  { id: "sling-bag", name: "Everyday Crossbody Sling Bag", blurb: "Water-resistant nylon, fits a phone, wallet and water bottle. Wear it front or back.", price: 24.99, was: 36.99, img: "", icon: "sling" },
+  { id: "layered-necklace", name: "Layered Gold Necklace Set", blurb: "Three 18k gold-plated stainless steel chains. Waterproof and won't turn green.", price: 18.99, was: 29.99, img: "", icon: "chain" }
+];
+
+const ICONS = {
+  battery: '<rect x="18" y="8" width="28" height="48" rx="7"/><path class="hot" d="M34 20l-6 12h8l-6 12"/><circle cx="32" cy="50" r="1.5"/>',
+  phone: '<rect x="18" y="6" width="28" height="52" rx="6"/><path class="hot" d="M8 22l8 6M8 42l8-6M56 22l-8 6M56 42l-8-6"/><path d="M28 12h8"/>',
+  posture: '<circle cx="32" cy="10" r="5"/><path d="M32 16v24M22 22c4 4 16 4 20 0M26 58l6-18 6 18"/><path class="hot" d="M20 26l12 10 12-10"/>',
+  sun: '<circle class="hot" cx="32" cy="26" r="12"/><path d="M32 6v4M14 26h-4M54 26h-4M19 13l3 3M45 13l-3 3M24 48h16l-4 10h-8z"/>',
+  cup: '<path d="M18 16h26l-3 42H21z"/><path d="M44 24h4a6 6 0 016 6v8a6 6 0 01-6 6h-5"/><path class="hot" d="M16 16h30M36 16l4-12"/>',
+  buds: '<path d="M18 14a8 8 0 0110 8v4a8 8 0 01-8 8v16"/><path d="M46 14a8 8 0 00-10 8v4a8 8 0 008 8v16"/><path class="hot" d="M24 50h16"/>',
+  bag: '<path d="M14 14h36v40H14z"/><path d="M14 27h36M14 41h36"/><path class="hot" d="M26 14c0-8 12-8 12 0"/>',
+  scrub: '<path d="M30 6h6v30h-6z"/><path d="M24 36h18v6H24z"/><circle class="hot" cx="33" cy="50" r="8"/><path d="M27 50h12"/>',
+  sling: '<path d="M10 10l40 30"/><rect x="20" y="30" width="34" height="22" rx="8"/><path class="hot" d="M26 38h22"/>',
+  chain: '<path d="M14 10c0 16 8 24 18 24s18-8 18-24"/><path d="M14 10c0 24 8 34 18 34s18-10 18-34"/><path class="hot" d="M14 10c0 30 8 44 18 44s18-14 18-44"/><circle cx="32" cy="54" r="2"/>'
+};
+
+const $ = (id) => document.getElementById(id);
+const money = (n) => new Intl.NumberFormat("en-US", { style: "currency", currency: STORE.currency }).format(n);
+let cart = {};
+try { cart = JSON.parse(localStorage.getItem("ff-cart") || "{}") || {}; } catch (e) { cart = {}; }
+const save = () => { try { localStorage.setItem("ff-cart", JSON.stringify(cart)); } catch (e) {} };
+const byId = (id) => PRODUCTS.find((p) => p.id === id);
+
+function renderGrid() {
+  $("grid").innerHTML = PRODUCTS.map((p, i) => `
+    <article class="card">
+      <div class="thumb"><span class="rank">#${i + 1} trending</span>
+        ${p.img ? `<img src="${p.img}" alt="${p.name}" loading="lazy">` : `<svg viewBox="0 0 64 64" aria-hidden="true">${ICONS[p.icon]}</svg>`}
+      </div>
+      <div class="info">
+        <h3>${p.name}</h3>
+        <p>${p.blurb}</p>
+        <div class="buy"><span class="price">${money(p.price)}<s>${money(p.was)}</s></span>
+          <button class="add" type="button" data-add="${p.id}">Add to cart</button></div>
+      </div>
+    </article>`).join("");
+}
+
+function totals() {
+  let sub = 0, n = 0;
+  for (const [id, q] of Object.entries(cart)) { const p = byId(id); if (p) { sub += p.price * q; n += q; } }
+  return { sub: Math.round(sub * 100) / 100, n };
+}
+
+function renderCart() {
+  const { sub, n } = totals();
+  $("count").textContent = n;
+  const ids = Object.keys(cart).filter((id) => byId(id));
+  $("lines").innerHTML = ids.length ? ids.map((id) => {
+    const p = byId(id);
+    return `<div class="line"><span class="name">${p.name}</span><span class="price">${money(p.price * cart[id])}</span>
+      <span class="qty"><button type="button" data-dec="${id}" aria-label="Remove one">−</button>${cart[id]}<button type="button" data-inc="${id}" aria-label="Add one">+</button></span></div>`;
+  }).join("") : `<p class="empty">Your cart is empty. Add something from the feed.</p>`;
+  $("totals").innerHTML = ids.length ? `<div><span>Subtotal</span><span>${money(sub)}</span></div><div><span>Shipping</span><span>Free</span></div><div class="grand"><span>Total</span><span>${money(sub)}</span></div>` : "";
+  $("paypal-buttons").hidden = !ids.length;
+}
+
+function openCart(open) { $("drawer").hidden = !open; $("drawer-bg").hidden = !open; }
+
+document.addEventListener("click", (e) => {
+  const t = e.target.closest("button"); if (!t) return;
+  if (t.dataset.add) { cart[t.dataset.add] = (cart[t.dataset.add] || 0) + 1; save(); renderCart(); openCart(true); }
+  if (t.dataset.inc) { cart[t.dataset.inc]++; save(); renderCart(); }
+  if (t.dataset.dec) { if (--cart[t.dataset.dec] <= 0) delete cart[t.dataset.dec]; save(); renderCart(); }
+});
+$("open-cart").onclick = () => openCart(true);
+$("close-cart").onclick = () => openCart(false);
+$("drawer-bg").onclick = () => openCart(false);
+
+function loadPayPal() {
+  const s = document.createElement("script");
+  s.src = `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(STORE.paypalClientId)}&currency=${STORE.currency}&intent=capture`;
+  s.onload = () => {
+    window.paypal.Buttons({
+      style: { layout: "vertical", shape: "pill", label: "checkout" },
+      createOrder: (data, actions) => {
+        const ids = Object.keys(cart).filter((id) => byId(id));
+        const { sub } = totals();
+        return actions.order.create({
+          purchase_units: [{
+            description: `${STORE.name} order`,
+            amount: { currency_code: STORE.currency, value: sub.toFixed(2),
+              breakdown: { item_total: { currency_code: STORE.currency, value: sub.toFixed(2) } } },
+            items: ids.map((id) => ({ name: byId(id).name.slice(0, 127), sku: id, quantity: String(cart[id]),
+              unit_amount: { currency_code: STORE.currency, value: byId(id).price.toFixed(2) } }))
+          }]
+          // PayPal collects the customer's shipping address during checkout.
+        });
+      },
+      onApprove: (data, actions) => actions.order.capture().then((order) => {
+        cart = {}; save(); renderCart();
+        $("lines").innerHTML = `<div class="thanks"><h3>Order placed!</h3><p>Thanks${order.payer && order.payer.name ? ", " + order.payer.name.given_name : ""}. Your order number is <b>${order.id}</b>. A receipt is on its way to your email, and we'll send tracking as soon as it ships.</p></div>`;
+      }),
+      onError: () => { $("lines").insertAdjacentHTML("afterbegin", `<p class="fallback">Payment didn't go through. Check your card details and try again, or pick another payment method.</p>`); }
+    }).render("#paypal-buttons");
+  };
+  s.onerror = () => { $("pay-fallback").hidden = false; };
+  document.head.appendChild(s);
+}
+
+$("store-name").textContent = STORE.name;
+$("contact-email").textContent = STORE.contactEmail;
+$("year").textContent = new Date().getFullYear();
+renderGrid(); renderCart(); loadPayPal();
+</script>
+</body>
+</html>
