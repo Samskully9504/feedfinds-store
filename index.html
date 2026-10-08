@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Trending TikTok products with free shipping.">
-<title>Feed Finds Shop</title>
+<title>ScrollStop Shop</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
@@ -108,7 +108,7 @@ footer p { margin: 8px 0 0; max-width: 65ch; }
 
 <header class="bar">
   <div class="wrap">
-    <a class="logo" href="#top" id="logo">Feed<span>Finds</span></a>
+    <a class="logo" href="#top" id="logo">Scroll<span>Stop</span></a>
     <button class="cart-btn" id="open-cart" type="button" aria-label="Open cart">Cart <b id="count">0</b></button>
   </div>
 </header>
@@ -150,8 +150,8 @@ footer p { margin: 8px 0 0; max-width: 65ch; }
 <script>
 /* ===== STORE SETTINGS: edit these ===== */
 const STORE = {
-  name: "FeedFinds",
-  contactEmail: "support@yourstore.com",
+  name: "ScrollStop",
+  contactEmail: "support@scrollstop.world",
   currency: "USD",
   // Paste your PayPal REST app Client ID here (developer.paypal.com > Apps & Credentials).
   // "test" runs PayPal's sandbox so you can try checkout with fake money.
@@ -188,8 +188,8 @@ const ICONS = {
 const $ = (id) => document.getElementById(id);
 const money = (n) => new Intl.NumberFormat("en-US", { style: "currency", currency: STORE.currency }).format(n);
 let cart = {};
-try { cart = JSON.parse(localStorage.getItem("ff-cart") || "{}") || {}; } catch (e) { cart = {}; }
-const save = () => { try { localStorage.setItem("ff-cart", JSON.stringify(cart)); } catch (e) {} };
+try { cart = JSON.parse(localStorage.getItem("ss-cart") || "{}") || {}; } catch (e) { cart = {}; }
+const save = () => { try { localStorage.setItem("ss-cart", JSON.stringify(cart)); } catch (e) {} };
 const byId = (id) => PRODUCTS.find((p) => p.id === id);
 
 function renderGrid() {
