@@ -117,7 +117,7 @@ footer p { margin: 8px 0 0; max-width: 65ch; }
   <section class="hero">
     <div class="eyebrow">Trending on TikTok · updated Oct 2026</div>
     <h1>The things your <em>For You page</em> won't stop showing you.</h1>
-    <p>Ten products people keep buying straight off their feeds, picked from this year's TikTok Shop and ad data. Free shipping on every order.</p>
+    <p>Twenty products people keep buying straight off their feeds, picked from this year's TikTok Shop and ad data. Free shipping on every order.</p>
   </section>
   <div class="promises"><span>Free tracked shipping</span><span>30-day money-back guarantee</span><span>Pay with PayPal, debit or credit card</span></div>
   <section class="grid" id="grid" aria-label="Products"></section>
@@ -160,16 +160,26 @@ const STORE = {
 
 /* ===== PRODUCTS: change prices, names, or add a photo URL in `img` ===== */
 const PRODUCTS = [
-  { id: "magsafe-powerbank", name: "Magnetic Snap-On Power Bank", blurb: "10,000mAh wireless pack that clicks onto the back of your phone. No cables in your pocket.", price: 34.99, was: 49.99, img: "images/magsafe-powerbank.jpg", icon: "battery" },
-  { id: "privacy-screen", name: "Privacy Screen Protector (2-pack)", blurb: "Tempered glass that goes dark from the side, so the person next to you can't read your texts.", price: 14.99, was: 24.99, img: "images/privacy-screen.jpg", icon: "phone" },
-  { id: "posture-corrector", name: "Adjustable Posture Corrector", blurb: "Breathable back brace that pulls your shoulders back while you work or scroll.", price: 24.99, was: 39.99, img: "images/posture-corrector.jpg", icon: "posture" },
-  { id: "sunset-lamp", name: "Sunset Projection Lamp", blurb: "The golden-hour glow from every room tour video. USB powered, 180° rotating head.", price: 22.99, was: 34.99, img: "images/sunset-lamp.jpg", icon: "sun" },
+  { id: "magsafe-powerbank", name: "Magnetic Snap-On Power Bank", blurb: "10,000mAh pack that snaps onto the back of your phone. 15W wireless and 20W wired fast charging.", price: 34.99, was: 49.99, img: "images/magsafe-powerbank.jpg", icon: "battery" },
+  { id: "mini-massage-gun", name: "Mini Pocket Massage Gun", blurb: "Palm-sized percussion massager for sore necks, backs and legs. Quiet motor, USB rechargeable.", price: 29.99, was: 49.99, img: "images/mini-massage-gun.jpg", icon: "scrub" },
+  { id: "shapewear-bodysuit", name: "Tummy-Control Shapewear Bodysuit", blurb: "Smoothing bodysuit that sculpts your waist under any outfit. Sizes S to 5XL.", price: 29.99, was: 44.99, img: "images/shapewear-bodysuit.jpg", icon: "posture" },
+  { id: "portable-blender", name: "Portable Blender", blurb: "Rechargeable personal blender for smoothies and shakes anywhere. Blend, then drink from the cup.", price: 29.99, was: 44.99, img: "images/portable-blender.jpg", icon: "cup" },
+  { id: "flame-diffuser", name: "Flame Aroma Diffuser", blurb: "Humidifier and essential-oil diffuser with a realistic glowing flame effect. Auto shut-off.", price: 29.99, was: 42.99, img: "images/flame-diffuser.jpg", icon: "sun" },
+  { id: "pet-water-fountain", name: "Stainless Steel Pet Water Fountain", blurb: "2L circulating fountain with a filter, so cats and dogs actually drink more. Ultra-quiet pump.", price: 34.99, was: 49.99, img: "images/pet-water-fountain.jpg", icon: "cup" },
+  { id: "mini-printer", name: "Mini Bluetooth Sticker Printer", blurb: "Pocket thermal printer for labels, notes and photo stickers straight from your phone. No ink needed.", price: 29.99, was: 44.99, img: "images/mini-printer.jpg", icon: "phone" },
+  { id: "car-vacuum", name: "Cordless Mini Vacuum", blurb: "Handheld rechargeable vacuum for car seats, desks and crumbs. Washable filter.", price: 29.99, was: 44.99, img: "images/car-vacuum.jpg", icon: "scrub" },
+  { id: "led-strip-lights", name: "Smart LED Strip Lights (15m)", blurb: "App-controlled color-changing light strip for the room-tour glow. Cut to fit.", price: 24.99, was: 39.99, img: "images/led-strip-lights.jpg", icon: "sun" },
+  { id: "car-wash-gun", name: "Electric High-Pressure Car Wash Gun", blurb: "Wash your car, bike or patio without a trip to the car wash. Multiple spray modes.", price: 39.99, was: 59.99, img: "images/car-wash-gun.jpg", icon: "scrub" },
+  { id: "electric-shaker", name: "Electric Protein Shaker Bottle", blurb: "Press a button and it mixes your protein shake for you. No clumps, USB rechargeable.", price: 24.99, was: 34.99, img: "images/electric-shaker.jpg", icon: "cup" },
+  { id: "packing-organizer", name: "6-Piece Packing Organizer Set", blurb: "Zippered cubes and pouches that keep your suitcase neat. Fits carry-ons.", price: 19.99, was: 29.99, img: "images/packing-organizer.jpg", icon: "bag" },
+  { id: "heart-necklace", name: "Gold Heart Necklace", blurb: "18k gold-plated stainless steel heart pendant. Water resistant and won't tarnish.", price: 16.99, was: 27.99, img: "images/heart-necklace.jpg", icon: "chain" },
+  { id: "air-duster", name: "Cordless Electric Air Duster", blurb: "Rechargeable air blower that clears dust from keyboards, cameras and vents. No more canned air.", price: 34.99, was: 49.99, img: "images/air-duster.jpg", icon: "phone" },
+  { id: "gym-travel-bag", name: "Gym & Travel Duffel with Shoe Pocket", blurb: "Water-resistant duffel with a separate shoe compartment. Gym, weekend trips, carry-on.", price: 34.99, was: 49.99, img: "images/gym-travel-bag.jpg", icon: "bag" },
   { id: "tumbler-40oz", name: "40oz Insulated Tumbler", blurb: "Handle, straw lid, fits in a cup holder. Ice still there the next morning.", price: 27.99, was: 39.99, img: "images/tumbler-40oz.jpg", icon: "cup" },
-  { id: "earbuds", name: "Wireless Noise-Cancel Earbuds", blurb: "Bluetooth 5.3, 30-hour case battery, touch controls and call noise reduction.", price: 29.99, was: 59.99, img: "images/earbuds.jpg", icon: "buds" },
-  { id: "toiletry-bag", name: "Hanging Travel Toiletry Bag", blurb: "Unzips into four clear pockets and hangs on a hook. The packing-video favourite.", price: 21.99, was: 32.99, img: "images/toiletry-bag.jpg", icon: "bag" },
-  { id: "spin-scrubber", name: "Cordless Electric Spin Scrubber", blurb: "Rechargeable scrubber with 5 brush heads for grout, tubs and stovetops. The #CleanTok staple.", price: 39.99, was: 59.99, img: "images/spin-scrubber.jpg", icon: "scrub" },
-  { id: "sling-bag", name: "Everyday Crossbody Sling Bag", blurb: "Water-resistant nylon, fits a phone, wallet and water bottle. Wear it front or back.", price: 24.99, was: 36.99, img: "images/sling-bag.jpg", icon: "sling" },
-  { id: "layered-necklace", name: "Layered Gold Necklace Set", blurb: "Three 18k gold-plated stainless steel chains. Waterproof and won't turn green.", price: 18.99, was: 29.99, img: "images/layered-necklace.jpg", icon: "chain" }
+  { id: "earbuds", name: "Wireless Noise-Cancel Earbuds", blurb: "Bluetooth earbuds with noise-canceling mic, touch controls and a charging case.", price: 29.99, was: 59.99, img: "images/earbuds.jpg", icon: "buds" },
+  { id: "spin-scrubber", name: "Cordless Electric Spin Scrubber", blurb: "Rechargeable power scrubber with swappable brush heads for tubs, sinks, grout and stovetops.", price: 34.99, was: 54.99, img: "images/spin-scrubber.jpg", icon: "scrub" },
+  { id: "sunset-lamp", name: "Sunset Projection Lamp", blurb: "The golden-hour glow from every room tour video. USB powered, color and brightness control.", price: 22.99, was: 34.99, img: "images/sunset-lamp.jpg", icon: "sun" },
+  { id: "posture-trainer", name: "Smart Posture Trainer", blurb: "Tiny wearable that buzzes when you slouch, with an app to track your progress. USB-C charging.", price: 44.99, was: 64.99, img: "images/posture-trainer.jpg", icon: "posture" }
 ];
 
 const ICONS = {
