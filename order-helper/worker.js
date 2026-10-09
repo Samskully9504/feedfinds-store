@@ -7,6 +7,7 @@
 //   PAYPAL_CLIENT_ID, PAYPAL_SECRET  - from developer.paypal.com > Apps & Credentials (Live)
 //   CJ_API_KEY                       - from CJ > Authorization > API
 //   NTFY_TOPIC (optional)            - a ntfy.sh topic name for phone alerts on each order
+//   DEFAULT_PHONE (optional)         - phone number CJ uses when PayPal doesn't share the buyer's
 
 const SITE = "https://scrollstop.world";
 
@@ -97,6 +98,11 @@ async function handleOrder(env, orderId) {
     }
   }
 
+  // CJ requires a 6-32 digit phone. PayPal often doesn't share the buyer's, so fall back to
+  // DEFAULT_PHONE (your own number, optional secret) or a placeholder.
+  const rawPhone = ship.phone_number?.national_number || order.payer?.phone?.phone_number?.national_number || "";
+  const phone = /^\d{6,32}$/.test(rawPhone.replace(/\D/g, "")) ? rawPhone.replace(/\D/g, "") : (env.DEFAULT_PHONE || "0000000000");
+
   const created = [];
   for (const [n, g] of groups.entries()) {
     const cheapest = g.options.reduce((m, o) => (o.logisticPrice < m.logisticPrice ? o : m));
@@ -110,7 +116,7 @@ async function handleOrder(env, orderId) {
       shippingCustomerName: (ship.name && ship.name.full_name) || [order.payer?.name?.given_name, order.payer?.name?.surname].filter(Boolean).join(" "),
       shippingAddress: a.address_line_1 || "",
       shippingAddress2: a.address_line_2 || "",
-      shippingPhone: order.payer?.phone?.phone_number?.national_number || "",
+      shippingPhone: phone,
       email: order.payer?.email_address || "",
       logisticName: cheapest.logisticName,
       fromCountryCode: "US",
