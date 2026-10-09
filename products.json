@@ -1,0 +1,82 @@
+{
+ "magsafe-powerbank": {
+  "vid": "1888050832044244994",
+  "price": 34.99
+ },
+ "fleece-tights": {
+  "vid": "1575007430411563009",
+  "price": 19.99
+ },
+ "fuzzy-socks": {
+  "vid": "1668434970286759936",
+  "price": 16.99
+ },
+ "lip-oil": {
+  "vid": "2407200328221607300",
+  "price": 14.99
+ },
+ "magnetic-lashes": {
+  "vid": "1790267011067551744",
+  "price": 16.99
+ },
+ "whitening-pen": {
+  "vid": "1831957406138912768",
+  "price": 19.99
+ },
+ "coconut-perfume": {
+  "vid": "1851189076431884288",
+  "price": 19.99
+ },
+ "face-neck-massager": {
+  "vid": "1914883004026212353",
+  "price": 44.99
+ },
+ "rose-necklace-box": {
+  "vid": "1699615145128894464",
+  "price": 34.99
+ },
+ "clover-heart-necklace": {
+  "vid": "1727170587803521024",
+  "price": 14.99
+ },
+ "car-charger-100w": {
+  "vid": "1692707565798428672",
+  "price": 34.99
+ },
+ "magnetic-led-cable": {
+  "vid": "3CDD8C8B-FDA6-4C25-AEDF-4D6548709BFA",
+  "price": 16.99
+ },
+ "wireless-charger-stand": {
+  "vid": "1736657502315491328",
+  "price": 29.99
+ },
+ "garment-steamer": {
+  "vid": "1744354266527051776",
+  "price": 29.99
+ },
+ "oil-sprayer": {
+  "vid": "43151312-68D1-439E-ADE5-1580180791DD",
+  "price": 16.99
+ },
+ "lint-roller": {
+  "vid": "1653949161345134592",
+  "price": 19.99
+ },
+ "projection-humidifier": {
+  "vid": "CC596E3B-7503-4B74-81D5-C467A1C9EE2D",
+  "price": 27.99
+ },
+ "bunny-night-light": {
+  "vid": "1770035341332844544",
+  "price": 27.99
+ },
+ "pet-hair-glove": {
+  "vid": "2603070947481606400",
+  "price": 12.99
+ },
+ "jumping-fish-toy": {
+  "vid": "AC9E74D4-CA38-4C68-AF9E-7E725B0C5838",
+  "price": 19.99
+ }
+}

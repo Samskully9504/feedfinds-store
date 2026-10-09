@@ -11,8 +11,10 @@
 
 const SITE = "https://scrollstop.world";
 
-// Store product id -> CJ variant id and the price customers pay. Keep prices in sync with index.html.
-const PRODUCTS = {
+// Store product id -> CJ variant id and the price customers pay. The live list is read from
+// scrollstop.world/products.json (updated with the site), so new products work without
+// re-pasting this code. This built-in copy is only a fallback if that file can't be read.
+const FALLBACK_PRODUCTS = {
   "magsafe-powerbank": { vid: "1888050832044244994", price: 34.99 },
   "fleece-tights": { vid: "1575007430411563009", price: 19.99 },
   "fuzzy-socks": { vid: "1668434970286759936", price: 16.99 },
@@ -65,7 +67,16 @@ async function cj(path, token, body) {
   return r.data;
 }
 
+async function loadProducts() {
+  try {
+    const r = await fetch(`${SITE}/products.json`, { cf: { cacheTtl: 300 } });
+    if (r.ok) { const p = await r.json(); if (p && Object.keys(p).length) return p; }
+  } catch (e) {}
+  return FALLBACK_PRODUCTS;
+}
+
 async function handleOrder(env, orderId) {
+  const PRODUCTS = await loadProducts();
   const order = await paypalOrder(env, orderId);
   if (order.status !== "COMPLETED") throw new Error(`PayPal order ${orderId} is ${order.status}, not paid`);
   const unit = order.purchase_units[0];
