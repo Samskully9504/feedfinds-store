@@ -117,9 +117,9 @@ footer p { margin: 8px 0 0; max-width: 65ch; }
   <section class="hero">
     <div class="eyebrow">Trending on TikTok · updated Oct 2026</div>
     <h1>The things your <em>For You page</em> won't stop showing you.</h1>
-    <p>Ten products people keep buying straight off their feeds, picked from this year's TikTok Shop and ad data. Free shipping on every order.</p>
+    <p>Twenty products people keep buying straight off their feeds, picked from TikTok Shop best-seller data. Ships from US warehouses, free.</p>
   </section>
-  <div class="promises"><span>Free tracked shipping</span><span>30-day returns</span><span>Pay with PayPal, debit or credit card</span></div>
+  <div class="promises"><span>Free US shipping in 3–8 days</span><span>30-day money-back guarantee</span><span>Pay with PayPal, debit or credit card</span></div>
   <section class="grid" id="grid" aria-label="Products"></section>
 </main>
 
@@ -127,7 +127,7 @@ footer p { margin: 8px 0 0; max-width: 65ch; }
   <div class="wrap cols">
     <div>
       <details id="shipping"><summary>Shipping policy</summary><p>Orders are processed within 1–3 business days and ship from our partner warehouses. Most US orders arrive in 7–12 business days. You get a tracking number by email as soon as your order ships.</p></details>
-      <details id="returns"><summary>Returns &amp; refunds</summary><p>Not happy? Email us within 30 days of delivery for a refund or replacement. Items that arrive damaged or defective are replaced free; send a photo and your order number.</p></details>
+      <details id="returns"><summary>Returns &amp; refunds</summary><p>Not happy? Email us within 30 days of delivery with your order number and we'll refund you in full. You don't need to send anything back. If an item arrives damaged or defective, send a photo and we'll replace it or refund you, whichever you prefer.</p></details>
     </div>
     <div>
       <details id="privacy"><summary>Privacy</summary><p>We only use your name, address and email to fulfil and track your order. Payments are handled by PayPal; we never see or store your card number.</p></details>
@@ -160,16 +160,26 @@ const STORE = {
 
 /* ===== PRODUCTS: change prices, names, or add a photo URL in `img` ===== */
 const PRODUCTS = [
-  { id: "magsafe-powerbank", name: "Magnetic Snap-On Power Bank", blurb: "10,000mAh wireless pack that clicks onto the back of your phone. No cables in your pocket.", price: 34.99, was: 49.99, img: "", icon: "battery" },
-  { id: "privacy-screen", name: "Privacy Screen Protector (2-pack)", blurb: "Tempered glass that goes dark from the side, so the person next to you can't read your texts.", price: 14.99, was: 24.99, img: "", icon: "phone" },
-  { id: "posture-corrector", name: "Adjustable Posture Corrector", blurb: "Breathable back brace that pulls your shoulders back while you work or scroll.", price: 24.99, was: 39.99, img: "", icon: "posture" },
-  { id: "sunset-lamp", name: "Sunset Projection Lamp", blurb: "The golden-hour glow from every room tour video. USB powered, 180° rotating head.", price: 22.99, was: 34.99, img: "", icon: "sun" },
-  { id: "tumbler-40oz", name: "40oz Insulated Tumbler", blurb: "Handle, straw lid, fits in a cup holder. Ice still there the next morning.", price: 27.99, was: 39.99, img: "", icon: "cup" },
-  { id: "earbuds", name: "Wireless Noise-Cancel Earbuds", blurb: "Bluetooth 5.3, 30-hour case battery, touch controls and call noise reduction.", price: 29.99, was: 59.99, img: "", icon: "buds" },
-  { id: "toiletry-bag", name: "Hanging Travel Toiletry Bag", blurb: "Unzips into four clear pockets and hangs on a hook. The packing-video favourite.", price: 21.99, was: 32.99, img: "", icon: "bag" },
-  { id: "spin-scrubber", name: "Cordless Electric Spin Scrubber", blurb: "Rechargeable scrubber with 5 brush heads for grout, tubs and stovetops. The #CleanTok staple.", price: 39.99, was: 59.99, img: "", icon: "scrub" },
-  { id: "sling-bag", name: "Everyday Crossbody Sling Bag", blurb: "Water-resistant nylon, fits a phone, wallet and water bottle. Wear it front or back.", price: 24.99, was: 36.99, img: "", icon: "sling" },
-  { id: "layered-necklace", name: "Layered Gold Necklace Set", blurb: "Three 18k gold-plated stainless steel chains. Waterproof and won't turn green.", price: 18.99, was: 29.99, img: "", icon: "chain" }
+  { id: "magsafe-powerbank", name: "Magnetic Snap-On Power Bank", blurb: "10,000mAh pack that snaps onto the back of your phone. 15W wireless and 20W wired fast charging.", price: 34.99, was: 49.99, img: "images/magsafe-powerbank.jpg", icon: "battery" },
+  { id: "fleece-tights", name: "Fleece-Lined Sheer-Look Tights", blurb: "Look like sheer tights, but lined with thick 300g fleece inside. Stretchy and warm for fall and winter.", price: 19.99, was: 29.99, img: "images/fleece-tights.jpg", icon: "posture" },
+  { id: "fuzzy-socks", name: "Fuzzy Over-the-Knee Socks", blurb: "Thick plush socks that cover your knees on cold nights. One size, stretches to fit.", price: 16.99, was: 24.99, img: "images/fuzzy-socks.jpg", icon: "posture" },
+  { id: "lip-oil", name: "Jelly Tinted Lip Oil", blurb: "Glossy, non-sticky lip oil with a sheer pink tint. Moisturizes all day. 4.8ml with a doe-foot applicator.", price: 14.99, was: 22.99, img: "images/lip-oil.jpg", icon: "cup" },
+  { id: "magnetic-lashes", name: "Magnetic Lash Kit", blurb: "Reusable magnetic lashes that clip on in seconds. No glue. One pair plus applicator.", price: 16.99, was: 26.99, img: "images/magnetic-lashes.jpg", icon: "sun" },
+  { id: "whitening-pen", name: "Teeth Whitening Pen", blurb: "Brush-on whitening gel with mint for coffee and tea stains. Twist, paint on after brushing, done.", price: 19.99, was: 29.99, img: "images/whitening-pen.jpg", icon: "scrub" },
+  { id: "coconut-perfume", name: "Warm Coconut Perfume", blurb: "Coconut, vanilla and sandalwood. The beach-vacation scent, all year.", price: 19.99, was: 29.99, img: "images/coconut-perfume.jpg", icon: "cup" },
+  { id: "face-neck-massager", name: "Face & Neck Massager", blurb: "Handheld massager with 3 modes and gentle heat for your face and neck routine. USB rechargeable.", price: 44.99, was: 69.99, img: "images/face-neck-massager.jpg", icon: "posture" },
+  { id: "rose-necklace-box", name: "Eternal Rose Necklace Gift Box", blurb: "Preserved rose in an apple-shaped box that opens to a silver love-knot necklace and card.", price: 34.99, was: 54.99, img: "images/rose-necklace-box.jpg", icon: "chain" },
+  { id: "clover-heart-necklace", name: "4-Hearts Clover Necklace", blurb: "Four magnetic hearts that click together into a clover or open into a row. Rose-gold tone.", price: 14.99, was: 24.99, img: "images/clover-heart-necklace.jpg", icon: "chain" },
+  { id: "car-charger-100w", name: "100W Retractable Car Charger", blurb: "Two built-in retractable USB-C cables plus extra ports. Up to 100W fast charging.", price: 34.99, was: 49.99, img: "images/car-charger-100w.jpg", icon: "battery" },
+  { id: "magnetic-led-cable", name: "Glowing Magnetic Charging Cable", blurb: "Light flows along the cable while it charges. Magnetic tip snaps on one-handed. USB-C.", price: 16.99, was: 24.99, img: "images/magnetic-led-cable.jpg", icon: "phone" },
+  { id: "wireless-charger-stand", name: "Foldable Magnetic Wireless Charger", blurb: "Folds flat for travel and charges your phone at up to 15W. Comes with a carry case.", price: 29.99, was: 44.99, img: "images/wireless-charger-stand.jpg", icon: "battery" },
+  { id: "garment-steamer", name: "Mini Handheld Steamer", blurb: "33W travel steamer that smooths wrinkles hanging or flat. US plug.", price: 29.99, was: 44.99, img: "images/garment-steamer.jpg", icon: "scrub" },
+  { id: "oil-sprayer", name: "Oil Mist Sprayer Bottle", blurb: "Fine mist for oil, vinegar or lemon juice. Made for air fryers and salads.", price: 16.99, was: 24.99, img: "images/oil-sprayer.jpg", icon: "cup" },
+  { id: "lint-roller", name: "Reusable Lint & Pet Hair Roller", blurb: "Rinse it under the tap instead of buying refills. Clothes, couch and car seats.", price: 19.99, was: 29.99, img: "images/lint-roller.jpg", icon: "scrub" },
+  { id: "projection-humidifier", name: "Mini Humidifier with Light Projector", blurb: "Quiet USB mist humidifier with a glowing projection light. Under 30dB.", price: 27.99, was: 39.99, img: "images/projection-humidifier.jpg", icon: "sun" },
+  { id: "bunny-night-light", name: "Squishy Bunny Night Light", blurb: "Soft silicone bunny lamp. Tap to change brightness. Doubles as a stress squish.", price: 27.99, was: 39.99, img: "images/bunny-night-light.jpg", icon: "sun" },
+  { id: "pet-hair-glove", name: "Pet Hair Remover Glove", blurb: "Pet them while you groom. Lifts loose fur from cats and dogs in a few strokes.", price: 12.99, was: 19.99, img: "images/pet-hair-glove.jpg", icon: "bag" },
+  { id: "jumping-fish-toy", name: "Flopping Fish Cat Toy", blurb: "Realistic fish that flips and wiggles when your cat touches it. USB rechargeable.", price: 19.99, was: 29.99, img: "images/jumping-fish-toy.jpg", icon: "bag" }
 ];
 
 const ICONS = {
