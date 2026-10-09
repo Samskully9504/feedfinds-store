@@ -281,7 +281,13 @@ function loadPayPal() {
         cart = {}; save(); renderCart();
         $("lines").innerHTML = `<div class="thanks"><h3>Order placed!</h3><p>Thanks${order.payer && order.payer.name ? ", " + order.payer.name.given_name : ""}. Your order number is <b>${order.id}</b>. A receipt is on its way to your email, and we'll send tracking as soon as it ships.</p></div>`;
       }),
-      onError: () => { $("lines").insertAdjacentHTML("afterbegin", `<p class="fallback">Payment didn't go through. Check your card details and try again, or pick another payment method.</p>`); }
+      onError: (err) => {
+        // Show PayPal's reason code (e.g. INSTRUMENT_DECLINED) so failed payments can be diagnosed.
+        const text = String((err && err.message) || err || "");
+        const m = text.match(/"issue":"([A-Z_]+)"/) || text.match(/\b([A-Z]+(?:_[A-Z]+)+)\b/);
+        const code = m ? m[1] : "unknown";
+        $("lines").insertAdjacentHTML("afterbegin", `<p class="fallback">Payment didn't go through. Check your card details and try again, or pick another payment method. <small>(PayPal: ${code})</small></p>`);
+      }
     }).render("#paypal-buttons");
   };
   s.onerror = () => { $("pay-fallback").hidden = false; };
