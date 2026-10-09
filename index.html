@@ -121,7 +121,7 @@ footer p { margin: 8px 0 0; max-width: 65ch; }
   <section class="hero">
     <div class="eyebrow">Trending on TikTok · updated Oct 2026</div>
     <h1>The things your <em>For You page</em> won't stop showing you.</h1>
-    <p>Twenty products people keep buying straight off their feeds, picked from TikTok Shop best-seller data. Ships from US warehouses, free.</p>
+    <p>Products people keep buying straight off their feeds, picked from TikTok Shop best-seller data. Ships from US warehouses, free.</p>
   </section>
   <div class="promises"><span>Free US shipping in 3–8 days</span><span>30-day money-back guarantee</span><span>Pay with PayPal, debit or credit card</span></div>
   <section class="grid" id="grid" aria-label="Products"></section>
@@ -167,6 +167,9 @@ const STORE = {
 
 /* ===== PRODUCTS: change prices, names, or add a photo URL in `img` ===== */
 const PRODUCTS = [
+  { id: "gnome-night-light", name: "Holiday Gnome 3D Night Light", blurb: "Two glowing gnomes etched in clear acrylic on a wood-look base. Warm white, USB powered. The easy holiday gift.", price: 24.99, was: 34.99, img: "images/gnome-night-light.jpg", icon: "sun" },
+  { id: "butterfly-earrings", name: "Butterfly Ear Cuff Earrings", blurb: "Sparkly rhinestone butterflies that climb up the ear. Silver tone, comes as a pair.", price: 12.99, was: 19.99, img: "images/butterfly-earrings.jpg", icon: "chain" },
+  { id: "cat-paw-mug", name: "Cat Paw Frosted Glass Cup", blurb: "Frosted glass cup with a paw-shaped bottom and tabby stripes. For coffee, tea or milk.", price: 24.99, was: 34.99, img: "images/cat-paw-mug.jpg", icon: "cup" },
   { id: "magsafe-powerbank", name: "Magnetic Snap-On Power Bank", blurb: "10,000mAh pack that snaps onto the back of your phone. 15W wireless and 20W wired fast charging.", price: 34.99, was: 49.99, img: "images/magsafe-powerbank.jpg", icon: "battery" },
   { id: "fleece-tights", name: "Fleece-Lined Sheer-Look Tights", blurb: "Look like sheer tights, but lined with thick 300g fleece inside. Stretchy and warm for fall and winter.", price: 19.99, was: 29.99, img: "images/fleece-tights.jpg", icon: "posture" },
   { id: "fuzzy-socks", name: "Fuzzy Over-the-Knee Socks", blurb: "Thick plush socks that cover your knees on cold nights. One size, stretches to fit.", price: 16.99, was: 24.99, img: "images/fuzzy-socks.jpg", icon: "posture" },
