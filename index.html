@@ -159,7 +159,10 @@ const STORE = {
   currency: "USD",
   // Paste your PayPal REST app Client ID here (developer.paypal.com > Apps & Credentials).
   // "test" runs PayPal's sandbox so you can try checkout with fake money.
-  paypalClientId: "BAAYfyGvVX7i2x6C49Ajd_rCoCJWWLsr8UWrVNTA6WIKcH8CR0WLicJRHFFzD09RUFWNCaGgWL8Hav82GY"
+  paypalClientId: "BAAUDGGbQAVU2DGo3210pYNXFYPI8HDTvh6M5k3q9xEFPgOvWG7SdCy_k4z5PXpl6JUB5Wf_1WDdvn1hLg",
+  // Web address of your order helper (order-helper/worker.js on Cloudflare). Paid orders are sent
+  // there and created in CJ automatically. Leave "" to place CJ orders by hand.
+  orderHelperUrl: "https://odd-wildflower-a148.scrollstop-orders.workers.dev/"
 };
 
 /* ===== PRODUCTS: change prices, names, or add a photo URL in `img` ===== */
@@ -273,6 +276,8 @@ function loadPayPal() {
         });
       },
       onApprove: (data, actions) => actions.order.capture().then((order) => {
+        if (STORE.orderHelperUrl) fetch(STORE.orderHelperUrl, { method: "POST", keepalive: true,
+          headers: { "Content-Type": "text/plain" }, body: JSON.stringify({ orderID: order.id }) }).catch(() => {});
         cart = {}; save(); renderCart();
         $("lines").innerHTML = `<div class="thanks"><h3>Order placed!</h3><p>Thanks${order.payer && order.payer.name ? ", " + order.payer.name.given_name : ""}. Your order number is <b>${order.id}</b>. A receipt is on its way to your email, and we'll send tracking as soon as it ships.</p></div>`;
       }),
