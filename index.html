@@ -117,9 +117,9 @@ footer p { margin: 8px 0 0; max-width: 65ch; }
   <section class="hero">
     <div class="eyebrow">Trending on TikTok · updated Oct 2026</div>
     <h1>The things your <em>For You page</em> won't stop showing you.</h1>
-    <p>Twenty products people keep buying straight off their feeds, picked from this year's TikTok Shop and ad data. Free shipping on every order.</p>
+    <p>Twenty products people keep buying straight off their feeds, picked from TikTok Shop best-seller data. Ships from US warehouses, free.</p>
   </section>
-  <div class="promises"><span>Free tracked shipping</span><span>30-day money-back guarantee</span><span>Pay with PayPal, debit or credit card</span></div>
+  <div class="promises"><span>Free US shipping in 3–8 days</span><span>30-day money-back guarantee</span><span>Pay with PayPal, debit or credit card</span></div>
   <section class="grid" id="grid" aria-label="Products"></section>
 </main>
 
@@ -161,25 +161,25 @@ const STORE = {
 /* ===== PRODUCTS: change prices, names, or add a photo URL in `img` ===== */
 const PRODUCTS = [
   { id: "magsafe-powerbank", name: "Magnetic Snap-On Power Bank", blurb: "10,000mAh pack that snaps onto the back of your phone. 15W wireless and 20W wired fast charging.", price: 34.99, was: 49.99, img: "images/magsafe-powerbank.jpg", icon: "battery" },
-  { id: "mini-massage-gun", name: "Mini Pocket Massage Gun", blurb: "Palm-sized percussion massager for sore necks, backs and legs. Quiet motor, USB rechargeable.", price: 29.99, was: 49.99, img: "images/mini-massage-gun.jpg", icon: "scrub" },
-  { id: "shapewear-bodysuit", name: "Tummy-Control Shapewear Bodysuit", blurb: "Smoothing bodysuit that sculpts your waist under any outfit. Sizes S to 5XL.", price: 29.99, was: 44.99, img: "images/shapewear-bodysuit.jpg", icon: "posture" },
-  { id: "portable-blender", name: "Portable Blender", blurb: "Rechargeable personal blender for smoothies and shakes anywhere. Blend, then drink from the cup.", price: 29.99, was: 44.99, img: "images/portable-blender.jpg", icon: "cup" },
-  { id: "flame-diffuser", name: "Flame Aroma Diffuser", blurb: "Humidifier and essential-oil diffuser with a realistic glowing flame effect. Auto shut-off.", price: 29.99, was: 42.99, img: "images/flame-diffuser.jpg", icon: "sun" },
-  { id: "pet-water-fountain", name: "Stainless Steel Pet Water Fountain", blurb: "2L circulating fountain with a filter, so cats and dogs actually drink more. Ultra-quiet pump.", price: 34.99, was: 49.99, img: "images/pet-water-fountain.jpg", icon: "cup" },
-  { id: "mini-printer", name: "Mini Bluetooth Sticker Printer", blurb: "Pocket thermal printer for labels, notes and photo stickers straight from your phone. No ink needed.", price: 29.99, was: 44.99, img: "images/mini-printer.jpg", icon: "phone" },
-  { id: "car-vacuum", name: "Cordless Mini Vacuum", blurb: "Handheld rechargeable vacuum for car seats, desks and crumbs. Washable filter.", price: 29.99, was: 44.99, img: "images/car-vacuum.jpg", icon: "scrub" },
-  { id: "led-strip-lights", name: "Smart LED Strip Lights (15m)", blurb: "App-controlled color-changing light strip for the room-tour glow. Cut to fit.", price: 24.99, was: 39.99, img: "images/led-strip-lights.jpg", icon: "sun" },
-  { id: "car-wash-gun", name: "Electric High-Pressure Car Wash Gun", blurb: "Wash your car, bike or patio without a trip to the car wash. Multiple spray modes.", price: 39.99, was: 59.99, img: "images/car-wash-gun.jpg", icon: "scrub" },
-  { id: "electric-shaker", name: "Electric Protein Shaker Bottle", blurb: "Press a button and it mixes your protein shake for you. No clumps, USB rechargeable.", price: 24.99, was: 34.99, img: "images/electric-shaker.jpg", icon: "cup" },
-  { id: "packing-organizer", name: "6-Piece Packing Organizer Set", blurb: "Zippered cubes and pouches that keep your suitcase neat. Fits carry-ons.", price: 19.99, was: 29.99, img: "images/packing-organizer.jpg", icon: "bag" },
-  { id: "heart-necklace", name: "Gold Heart Necklace", blurb: "18k gold-plated stainless steel heart pendant. Water resistant and won't tarnish.", price: 16.99, was: 27.99, img: "images/heart-necklace.jpg", icon: "chain" },
-  { id: "air-duster", name: "Cordless Electric Air Duster", blurb: "Rechargeable air blower that clears dust from keyboards, cameras and vents. No more canned air.", price: 34.99, was: 49.99, img: "images/air-duster.jpg", icon: "phone" },
-  { id: "gym-travel-bag", name: "Gym & Travel Duffel with Shoe Pocket", blurb: "Water-resistant duffel with a separate shoe compartment. Gym, weekend trips, carry-on.", price: 34.99, was: 49.99, img: "images/gym-travel-bag.jpg", icon: "bag" },
-  { id: "tumbler-40oz", name: "40oz Insulated Tumbler", blurb: "Handle, straw lid, fits in a cup holder. Ice still there the next morning.", price: 27.99, was: 39.99, img: "images/tumbler-40oz.jpg", icon: "cup" },
-  { id: "earbuds", name: "Wireless Noise-Cancel Earbuds", blurb: "Bluetooth earbuds with noise-canceling mic, touch controls and a charging case.", price: 29.99, was: 59.99, img: "images/earbuds.jpg", icon: "buds" },
-  { id: "spin-scrubber", name: "Cordless Electric Spin Scrubber", blurb: "Rechargeable power scrubber with swappable brush heads for tubs, sinks, grout and stovetops.", price: 34.99, was: 54.99, img: "images/spin-scrubber.jpg", icon: "scrub" },
-  { id: "sunset-lamp", name: "Sunset Projection Lamp", blurb: "The golden-hour glow from every room tour video. USB powered, color and brightness control.", price: 22.99, was: 34.99, img: "images/sunset-lamp.jpg", icon: "sun" },
-  { id: "posture-trainer", name: "Smart Posture Trainer", blurb: "Tiny wearable that buzzes when you slouch, with an app to track your progress. USB-C charging.", price: 44.99, was: 64.99, img: "images/posture-trainer.jpg", icon: "posture" }
+  { id: "fleece-tights", name: "Fleece-Lined Sheer-Look Tights", blurb: "Look like sheer tights, but lined with thick 300g fleece inside. Stretchy and warm for fall and winter.", price: 19.99, was: 29.99, img: "images/fleece-tights.jpg", icon: "posture" },
+  { id: "fuzzy-socks", name: "Fuzzy Over-the-Knee Socks", blurb: "Thick plush socks that cover your knees on cold nights. One size, stretches to fit.", price: 16.99, was: 24.99, img: "images/fuzzy-socks.jpg", icon: "posture" },
+  { id: "lip-oil", name: "Jelly Tinted Lip Oil", blurb: "Glossy, non-sticky lip oil with a sheer pink tint. Moisturizes all day. 4.8ml with a doe-foot applicator.", price: 14.99, was: 22.99, img: "images/lip-oil.jpg", icon: "cup" },
+  { id: "magnetic-lashes", name: "Magnetic Lash Kit", blurb: "Reusable magnetic lashes that clip on in seconds. No glue. One pair plus applicator.", price: 16.99, was: 26.99, img: "images/magnetic-lashes.jpg", icon: "sun" },
+  { id: "whitening-pen", name: "Teeth Whitening Pen", blurb: "Brush-on whitening gel with mint for coffee and tea stains. Twist, paint on after brushing, done.", price: 19.99, was: 29.99, img: "images/whitening-pen.jpg", icon: "scrub" },
+  { id: "coconut-perfume", name: "Warm Coconut Perfume", blurb: "Coconut, vanilla and sandalwood. The beach-vacation scent, all year.", price: 19.99, was: 29.99, img: "images/coconut-perfume.jpg", icon: "cup" },
+  { id: "face-neck-massager", name: "Face & Neck Massager", blurb: "Handheld massager with 3 modes and gentle heat for your face and neck routine. USB rechargeable.", price: 44.99, was: 69.99, img: "images/face-neck-massager.jpg", icon: "posture" },
+  { id: "rose-necklace-box", name: "Eternal Rose Necklace Gift Box", blurb: "Preserved rose in an apple-shaped box that opens to a silver love-knot necklace and card.", price: 34.99, was: 54.99, img: "images/rose-necklace-box.jpg", icon: "chain" },
+  { id: "clover-heart-necklace", name: "4-Hearts Clover Necklace", blurb: "Four magnetic hearts that click together into a clover or open into a row. Rose-gold tone.", price: 14.99, was: 24.99, img: "images/clover-heart-necklace.jpg", icon: "chain" },
+  { id: "car-charger-100w", name: "100W Retractable Car Charger", blurb: "Two built-in retractable USB-C cables plus extra ports. Up to 100W fast charging.", price: 34.99, was: 49.99, img: "images/car-charger-100w.jpg", icon: "battery" },
+  { id: "magnetic-led-cable", name: "Glowing Magnetic Charging Cable", blurb: "Light flows along the cable while it charges. Magnetic tip snaps on one-handed. USB-C.", price: 16.99, was: 24.99, img: "images/magnetic-led-cable.jpg", icon: "phone" },
+  { id: "wireless-charger-stand", name: "Foldable Magnetic Wireless Charger", blurb: "Folds flat for travel and charges your phone at up to 15W. Comes with a carry case.", price: 29.99, was: 44.99, img: "images/wireless-charger-stand.jpg", icon: "battery" },
+  { id: "garment-steamer", name: "Mini Handheld Steamer", blurb: "33W travel steamer that smooths wrinkles hanging or flat. US plug.", price: 29.99, was: 44.99, img: "images/garment-steamer.jpg", icon: "scrub" },
+  { id: "oil-sprayer", name: "Oil Mist Sprayer Bottle", blurb: "Fine mist for oil, vinegar or lemon juice. Made for air fryers and salads.", price: 16.99, was: 24.99, img: "images/oil-sprayer.jpg", icon: "cup" },
+  { id: "lint-roller", name: "Reusable Lint & Pet Hair Roller", blurb: "Rinse it under the tap instead of buying refills. Clothes, couch and car seats.", price: 19.99, was: 29.99, img: "images/lint-roller.jpg", icon: "scrub" },
+  { id: "projection-humidifier", name: "Mini Humidifier with Light Projector", blurb: "Quiet USB mist humidifier with a glowing projection light. Under 30dB.", price: 27.99, was: 39.99, img: "images/projection-humidifier.jpg", icon: "sun" },
+  { id: "bunny-night-light", name: "Squishy Bunny Night Light", blurb: "Soft silicone bunny lamp. Tap to change brightness. Doubles as a stress squish.", price: 27.99, was: 39.99, img: "images/bunny-night-light.jpg", icon: "sun" },
+  { id: "pet-hair-glove", name: "Pet Hair Remover Glove", blurb: "Pet them while you groom. Lifts loose fur from cats and dogs in a few strokes.", price: 12.99, was: 19.99, img: "images/pet-hair-glove.jpg", icon: "bag" },
+  { id: "jumping-fish-toy", name: "Flopping Fish Cat Toy", blurb: "Realistic fish that flips and wiggles when your cat touches it. USB rechargeable.", price: 19.99, was: 29.99, img: "images/jumping-fish-toy.jpg", icon: "bag" }
 ];
 
 const ICONS = {
