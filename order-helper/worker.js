@@ -8,6 +8,9 @@
 //   PAYPAL_CLIENT_ID, PAYPAL_SECRET  - from developer.paypal.com > Apps & Credentials (Live)
 //   CJ_API_KEY                       - from CJ > Authorization > API
 //   NTFY_TOPIC (optional)            - a ntfy.sh topic name for phone alerts on each order
+//   NTFY_TOKEN (optional)            - a ntfy.sh access token (Account > Access tokens). Cloudflare
+//                                      shares its internet addresses between many sites, so without
+//                                      a token ntfy's free daily limit can be used up by others.
 //   DEFAULT_PHONE (optional)         - phone number CJ uses when PayPal doesn't share the buyer's
 
 const SITE = "https://scrollstop.world";
@@ -43,9 +46,12 @@ const cors = { "Access-Control-Allow-Origin": SITE, "Access-Control-Allow-Method
 const json = (body, status = 200) => new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json", ...cors } });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+const ntfy = (env, body, headers) => fetch(`https://ntfy.sh/${env.NTFY_TOPIC}`, { method: "POST", body,
+  headers: { ...headers, ...(env.NTFY_TOKEN ? { Authorization: `Bearer ${env.NTFY_TOKEN}` } : {}) } });
+
 async function notify(env, title, message) {
   if (!env.NTFY_TOPIC) return;
-  try { await fetch(`https://ntfy.sh/${env.NTFY_TOPIC}`, { method: "POST", headers: { Title: title }, body: message }); } catch (e) {}
+  try { await ntfy(env, message, { Title: title }); } catch (e) {}
 }
 
 // Contact us form -> phone alert with the shopper's message and a Reply by email button.
@@ -58,9 +64,9 @@ async function handleContact(env, d) {
   const order = clip(d.order, 40), topic = clip(d.topic, 60) || "Message";
   const body = `${message}\n\nFrom: ${clip(d.name, 80) || "(no name)"} <${email}>${order ? `\nOrder: ${order}` : ""}`;
   const subject = encodeURIComponent(`Re: ${topic}${order ? ` (order ${order})` : ""}`);
-  const r = await fetch(`https://ntfy.sh/${env.NTFY_TOPIC}`, { method: "POST", body: `${topic}\n${body}`,
-    headers: { Title: "New ScrollStop customer message", Tags: "email", Actions: `view, Reply by email, mailto:${email}?subject=${subject}` } });
-  return r.ok ? json({ ok: true, contact: true }) : json({ ok: false, contact: true, error: "alert failed" }, 502);
+  const r = await ntfy(env, `${topic}\n${body}`,
+    { Title: "New ScrollStop customer message", Tags: "email", Actions: `view, Reply by email, mailto:${email}?subject=${subject}` });
+  return r.ok ? json({ ok: true, contact: true }) : json({ ok: false, contact: true, error: `alert failed (ntfy ${r.status})` }, 502);
 }
 
 async function paypalOrder(env, id) {
