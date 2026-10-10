@@ -291,7 +291,7 @@ footer p { margin: 8px 0 0; max-width: 65ch; }
       <p class="mail">Email: <a id="contact-mail" href="#"></a> <button type="button" id="copy-mail">Copy</button></p>
       <p>Have an order number? Include it so we can help faster.</p>
     </div>
-    <form id="contact-form">
+    <form id="contact-form" style="position:relative">
       <div class="row">
         <label>Your name<input name="name" autocomplete="name" required></label>
         <label>Your email<input name="email" type="email" autocomplete="email" required></label>
@@ -300,10 +300,10 @@ footer p { margin: 8px 0 0; max-width: 65ch; }
         <label>Topic<select name="topic"><option>Question about a product</option><option>Where is my order?</option><option>Refund or damaged item</option><option>Something else</option></select></label>
         <label>Order number (optional)<input name="order" inputmode="text"></label>
       </div>
-      <label>Message<textarea name="message" required></textarea></label>
+      <label>Message<textarea name="message" required maxlength="2000"></textarea></label>
+      <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
       <button class="btn primary" type="submit" style="justify-content:center">Send message</button>
-      <p class="note">This opens your email app with your message ready to send.</p>
-      <p class="sent" id="contact-sent" hidden>Your email app should open now. If it doesn't, email us at the address on the left.</p>
+            <p class="sent" id="contact-sent" hidden>Your email app should open now. If it doesn't, email us at the address on the left.</p>
     </form>
   </section>
 </main>
@@ -612,12 +612,27 @@ $("contact-mail").href = `mailto:${STORE.contactEmail}`;
 $("copy-mail").onclick = (e) => {
   try { navigator.clipboard.writeText(STORE.contactEmail).then(() => { e.target.textContent = "Copied"; }); } catch (err) {}
 };
-$("contact-form").addEventListener("submit", (e) => {
+$("contact-form").addEventListener("submit", async (e) => {
   e.preventDefault();
-  const f = new FormData(e.target);
+  const form = e.target, f = new FormData(form), btn = form.querySelector("[type=submit]");
   const subject = `${f.get("topic")}${f.get("order") ? " (order " + f.get("order") + ")" : ""}`;
   const body = `${f.get("message")}\n\nName: ${f.get("name")}\nEmail: ${f.get("email")}${f.get("order") ? "\nOrder number: " + f.get("order") : ""}`;
-  location.href = `mailto:${STORE.contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  btn.disabled = true; btn.textContent = "Sending…";
+  let sent = false;
+  try {
+    const r = await fetch(STORE.orderHelperUrl, { method: "POST", headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify({ type: "contact", ...Object.fromEntries(f) }) });
+    sent = r.ok && (await r.json()).contact === true;
+  } catch (err) {}
+  btn.disabled = false; btn.textContent = "Send message";
+  if (sent) {
+    form.reset();
+    $("contact-sent").textContent = "Thanks! Your message was sent. We'll reply by email within one business day.";
+  } else {
+    // Helper unreachable: fall back to the shopper's email app.
+    location.href = `mailto:${STORE.contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    $("contact-sent").textContent = "Your email app should open now with your message. If it doesn't, email us at the address on the left.";
+  }
   $("contact-sent").hidden = false;
 });
 
