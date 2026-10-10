@@ -173,6 +173,68 @@ footer p { margin: 8px 0 0; max-width: 65ch; }
 .perks div { border: 1px solid var(--line); border-radius: 12px; padding: 10px 6px; }
 .perks b { display: block; font-size: 18px; margin-bottom: 2px; }
 @media (min-width: 760px) { .pd-in { grid-template-columns: 1.1fr 1fr; } .pd-info { padding: 32px 28px; } }
+
+/* Shop tools: search, category chips, sort */
+#shop, #contact-us, footer details { scroll-margin-top: calc(var(--bar-h, 64px) + 8px); }
+.tools { position: sticky; top: calc(env(safe-area-inset-top, 0px) + var(--bar-h, 64px)); z-index: 5; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(10px); display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; padding-block: 10px 12px; margin-inline: -16px; padding-inline: 16px; }
+.search { position: relative; display: flex; gap: 8px; }
+.search input { flex: 1; min-width: 0; font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 12px 40px 12px 44px; }
+.search input:focus { outline: 2px solid var(--accent); outline-offset: 0; border-color: transparent; }
+.search svg { position: absolute; left: 16px; top: 50%; translate: 0 -50%; width: 18px; height: 18px; stroke: var(--muted); fill: none; stroke-width: 2; pointer-events: none; }
+.search .clear { position: absolute; right: 118px; top: 50%; translate: 0 -50%; border: 0; background: none; color: var(--muted); font-size: 18px; width: 30px; height: 30px; }
+.search select { font: 500 14px var(--body); color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 0 12px; width: 108px; }
+.chips { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; margin-inline: -16px; padding-inline: 16px; }
+.chips::-webkit-scrollbar { display: none; }
+.chips button { flex: none; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 8px 14px; font-weight: 600; font-size: 14px; white-space: nowrap; }
+.chips button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: transparent; }
+.chips button small { font: 500 12px var(--mono); opacity: .6; margin-left: 4px; }
+.no-results { grid-column: 1 / -1; text-align: center; color: var(--muted); padding: 40px 16px; display: grid; gap: 12px; justify-items: center; }
+.no-results b { color: var(--ink); font: 800 22px/1.2 var(--display); }
+
+/* Header links */
+.bar-right { display: flex; align-items: center; gap: 6px; }
+.bar-link { text-decoration: none; font-weight: 600; font-size: 15px; padding: 9px 12px; border-radius: 999px; }
+.bar-link:hover { background: var(--tile); }
+
+/* Contact */
+.contact { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; padding-block: 48px 56px; border-top: 1px solid var(--line); }
+.contact h2 { margin: 0 0 8px; font: 800 clamp(26px, 3.6vw, 36px)/1.1 var(--display); letter-spacing: -0.02em; }
+.contact p { margin: 0 0 10px; color: var(--muted); }
+.contact form { display: grid; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 20px; }
+.contact label { display: grid; gap: 6px; font-weight: 600; font-size: 14px; }
+.contact input, .contact textarea, .contact select { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 11px 12px; width: 100%; }
+.contact textarea { min-height: 120px; resize: vertical; }
+.contact .row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.contact .mail { display: inline-flex; gap: 8px; align-items: center; flex-wrap: wrap; font-weight: 600; }
+.contact .mail button { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 6px 12px; font-size: 13px; }
+.contact .sent { color: var(--ok); font-size: 14px; }
+@media (min-width: 760px) { .contact { grid-template-columns: 1fr 1.3fr; align-items: start; } .contact .row { grid-template-columns: 1fr 1fr; } }
+
+/* Chat helper */
+.chat-fab { position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 15; border: 0; border-radius: 999px; background: var(--ink); color: var(--bg); padding: 13px 18px; font-weight: 700; display: inline-flex; gap: 8px; align-items: center; box-shadow: 0 14px 30px -12px rgba(20, 10, 40, .6); }
+.chat-fab i { width: 9px; height: 9px; border-radius: 50%; background: var(--ok); font-style: normal; }
+.chat { position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 16; width: min(380px, calc(100% - 32px)); height: min(600px, calc(100dvh - 32px)); background: var(--surface); border: 1px solid var(--line); border-radius: 22px; box-shadow: 0 30px 70px -20px rgba(0, 0, 0, .45); display: flex; flex-direction: column; overflow: hidden; }
+.chat-head { display: flex; align-items: center; gap: 10px; padding: 14px 14px 12px 16px; border-bottom: 1px solid var(--line); background: linear-gradient(120deg, color-mix(in srgb, var(--accent) 14%, var(--surface)), color-mix(in srgb, var(--cyan) 12%, var(--surface))); }
+.chat-head img { width: 34px; height: 34px; border-radius: 10px; }
+.chat-head div { flex: 1; line-height: 1.2; }
+.chat-head b { display: block; font: 800 16px/1.2 var(--display); }
+.chat-head small { color: var(--muted); font-size: 12px; }
+.chat-log { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; overscroll-behavior: contain; }
+.msg { max-width: 88%; padding: 10px 13px; border-radius: 16px; font-size: 15px; line-height: 1.45; }
+.msg.bot { background: var(--tile); border-bottom-left-radius: 6px; align-self: flex-start; }
+.msg.me { background: var(--accent); color: var(--accent-ink); border-bottom-right-radius: 6px; align-self: flex-end; }
+.msg a { color: inherit; font-weight: 600; }
+.picks { display: grid; gap: 8px; align-self: stretch; }
+.pick { display: grid; grid-template-columns: 52px 1fr auto; gap: 10px; align-items: center; text-decoration: none; border: 1px solid var(--line); border-radius: 14px; padding: 6px 10px 6px 6px; background: var(--surface); }
+.pick img { width: 52px; height: 52px; border-radius: 10px; object-fit: cover; }
+.pick span { font-weight: 600; font-size: 14px; line-height: 1.25; }
+.pick em { font: 500 14px var(--mono); font-style: normal; }
+.quick { display: flex; gap: 6px; flex-wrap: wrap; padding: 0 14px 10px; }
+.quick button { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 6px 11px; font-size: 13px; font-weight: 600; }
+.chat form { display: flex; gap: 8px; padding: 10px 12px calc(12px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--line); }
+.chat form input { flex: 1; min-width: 0; font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 10px 14px; }
+.chat form button { border: 0; background: var(--accent); color: var(--accent-ink); border-radius: 999px; padding: 0 16px; font-weight: 700; }
+@media (max-width: 520px) { .chat { right: 0; bottom: 0; width: 100%; height: 100dvh; border-radius: 0; border: 0; } .bar-link.hide-sm { display: none; } }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>
 </head>
@@ -181,7 +243,11 @@ footer p { margin: 8px 0 0; max-width: 65ch; }
 <header class="bar">
   <div class="wrap">
     <a class="logo" href="#top" id="logo"><img src="images/logo.svg" alt="" width="32" height="32"><b style="font-weight:inherit">Scroll<span>Stop</span></b></a>
-    <button class="cart-btn" id="open-cart" type="button" aria-label="Open cart">Cart <b id="count">0</b></button>
+    <div class="bar-right">
+      <a class="bar-link hide-sm" href="#shop">Shop</a>
+      <a class="bar-link" href="#contact-us">Contact</a>
+      <button class="cart-btn" id="open-cart" type="button" aria-label="Open cart">Cart <b id="count">0</b></button>
+    </div>
   </div>
 </header>
 
@@ -204,14 +270,48 @@ footer p { margin: 8px 0 0; max-width: 65ch; }
   </section>
   <div class="ticker" aria-hidden="true"><div id="ticker"></div></div>
   <div class="promises"><span>Free US shipping in 3–8 days</span><span>30-day money-back guarantee</span><span>Pay with PayPal, debit or credit card</span></div>
+  <div class="shop">
   <div class="section-head" id="shop"><h2>Trending now</h2><span>Tap any item for a closer look</span></div>
+  <div class="tools">
+    <div class="search" role="search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+      <input id="q" type="search" placeholder="Search products" aria-label="Search products" autocomplete="off" enterkeyhint="search">
+      <button class="clear" id="q-clear" type="button" aria-label="Clear search" hidden>✕</button>
+      <select id="sort" aria-label="Sort products"><option value="trend">Trending</option><option value="low">Price: low</option><option value="high">Price: high</option></select>
+    </div>
+    <div class="chips" id="chips" role="group" aria-label="Categories"></div>
+  </div>
   <section class="grid" id="grid" aria-label="Products"></section>
+  </div>
+
+  <section class="contact" id="contact-us" aria-labelledby="contact-title">
+    <div>
+      <h2 id="contact-title">Contact us</h2>
+      <p>Questions about an order, shipping or a refund? Send us a message and we'll reply within one business day.</p>
+      <p class="mail">Email: <a id="contact-mail" href="#"></a> <button type="button" id="copy-mail">Copy</button></p>
+      <p>Have an order number? Include it so we can help faster.</p>
+    </div>
+    <form id="contact-form">
+      <div class="row">
+        <label>Your name<input name="name" autocomplete="name" required></label>
+        <label>Your email<input name="email" type="email" autocomplete="email" required></label>
+      </div>
+      <div class="row">
+        <label>Topic<select name="topic"><option>Question about a product</option><option>Where is my order?</option><option>Refund or damaged item</option><option>Something else</option></select></label>
+        <label>Order number (optional)<input name="order" inputmode="text"></label>
+      </div>
+      <label>Message<textarea name="message" required></textarea></label>
+      <button class="btn primary" type="submit" style="justify-content:center">Send message</button>
+      <p class="note">This opens your email app with your message ready to send.</p>
+      <p class="sent" id="contact-sent" hidden>Your email app should open now. If it doesn't, email us at the address on the left.</p>
+    </form>
+  </section>
 </main>
 
 <footer>
   <div class="wrap cols">
     <div>
-      <details id="shipping"><summary>Shipping policy</summary><p>Orders are processed within 1–3 business days and ship from our partner warehouses. Most US orders arrive in 7–12 business days. You get a tracking number by email as soon as your order ships.</p></details>
+      <details id="shipping"><summary>Shipping policy</summary><p>Orders are processed within 1–3 business days and ship from our partner warehouses. Most US orders arrive in 3–8 business days. You get a tracking number by email as soon as your order ships.</p></details>
       <details id="returns"><summary>Returns &amp; refunds</summary><p>Not happy? Email us within 30 days of delivery with your order number and we'll refund you in full. You don't need to send anything back. If an item arrives damaged or defective, send a photo and we'll replace it or refund you, whichever you prefer.</p></details>
     </div>
     <div>
@@ -243,6 +343,14 @@ footer p { margin: 8px 0 0; max-width: 65ch; }
   </div>
 </dialog>
 
+<button class="chat-fab" id="chat-open" type="button" aria-label="Open help chat"><i></i>Ask us</button>
+<section class="chat" id="chat" hidden aria-label="Help chat">
+  <div class="chat-head"><img src="images/logo.svg" alt=""><div><b>ScrollStop Helper</b><small>Finds products and answers store questions</small></div><button class="x" id="chat-close" type="button" aria-label="Close chat">✕</button></div>
+  <div class="chat-log" id="chat-log" aria-live="polite"></div>
+  <div class="quick" id="chat-quick"></div>
+  <form id="chat-form"><input id="chat-in" placeholder="Ask anything, e.g. gift under $25" aria-label="Your message" autocomplete="off" enterkeyhint="send"><button type="submit">Send</button></form>
+</section>
+
 <div class="drawer-bg" id="drawer-bg" hidden></div>
 <aside class="drawer" id="drawer" hidden aria-label="Cart">
   <header><h2>Your cart</h2><button class="x" id="close-cart" type="button" aria-label="Close cart">✕</button></header>
@@ -269,33 +377,33 @@ const STORE = {
 
 /* ===== PRODUCTS: change prices, names, or add a photo URL in `img` ===== */
 const PRODUCTS = [
-  { id: "snowy-night-light", name: "Snowy Street Lamp Night Light Kit", blurb: "Build a tiny street lamp glowing over a snow-filled scene in a clear case. Easy DIY kit with step-by-step guide and gift bag.", price: 24.99, was: 34.99, img: "images/snowy-night-light.jpg", icon: "sun", photos: 3, points: ["Warm glowing lamp over a snowy scene", "Easy DIY kit with step-by-step guide", "Clear case looks great on a shelf or nightstand", "Comes with a gift bag, ready to give"] },
-  { id: "glow-drawing-board", name: "Glow-in-the-Dark Drawing Board", blurb: "Kids draw with a light pen and the picture glows, then fades for a fresh start. Large A3 board with stencils. Ages 3+.", price: 27.99, was: 39.99, img: "images/glow-drawing-board.jpg", icon: "sun", photos: 3, points: ["Large A3 glow board with light pen", "Drawings glow, then fade in about 30 minutes", "Stencils included for letters and shapes", "Screen-free fun for ages 3+"] },
-  { id: "rose-speaker-lamp", name: "Glowing Rose Lamp & Bluetooth Speaker", blurb: "A pink rose with fairy lights under a glass dome, on a black base that doubles as a Bluetooth speaker.", price: 49.99, was: 69.99, img: "images/rose-speaker-lamp.jpg", icon: "sun", photos: 3, points: ["Glowing rose with fairy lights under a glass dome", "Base doubles as a Bluetooth speaker", "Cozy night light for a bedroom or desk", "A gift for Christmas, birthdays or Valentine's Day"] },
-  { id: "satin-sleep-set", name: "4-Piece Satin Sleep Set", blurb: "Champagne satin pillowcase, eye mask, scrunchie and headband. Gentle on hair and skin, gift-ready.", price: 29.99, was: 44.99, img: "images/satin-sleep-set.jpg", icon: "posture", photos: 1, points: ["Satin pillowcase (19 x 26 in) that's gentle on hair and skin", "Eye mask blocks out light", "Matching scrunchie and headband", "Gift-ready set for her or a stocking stuffer"] },
-  { id: "gnome-night-light", name: "Holiday Gnome 3D Night Light", blurb: "Two glowing gnomes etched in clear acrylic on a wood-look base. Warm white, USB powered. The easy holiday gift.", price: 24.99, was: 34.99, img: "images/gnome-night-light.jpg", icon: "sun", photos: 3, points: ["3D gnome design that glows warm white", "Wood-look base, USB powered", "Looks great on a shelf, nightstand or desk", "An easy holiday gift or Secret Santa pick"] },
-  { id: "butterfly-earrings", name: "Butterfly Ear Cuff Earrings", blurb: "Sparkly rhinestone butterflies that climb up the ear. Silver tone, comes as a pair.", price: 12.99, was: 19.99, img: "images/butterfly-earrings.jpg", icon: "chain", photos: 4, points: ["Rhinestone butterflies in a silver tone", "Climber style that follows the curve of the ear", "Comes as a pair", "Dresses up any outfit in seconds"] },
-  { id: "cat-paw-mug", name: "Cat Paw Frosted Glass Cup", blurb: "Frosted glass cup with a paw-shaped bottom and tabby stripes. For coffee, tea or milk.", price: 24.99, was: 34.99, img: "images/cat-paw-mug.jpg", icon: "cup", photos: 4, points: ["Paw-shaped bottom that shows as you drink", "Frosted glass with orange tabby stripes", "Holds coffee, tea, milk or juice", "A sweet gift for any cat lover"] },
-  { id: "magsafe-powerbank", name: "Magnetic Snap-On Power Bank", blurb: "10,000mAh pack that snaps onto the back of your phone. 15W wireless and 20W wired fast charging.", price: 34.99, was: 49.99, img: "images/magsafe-powerbank.jpg", icon: "battery", photos: 4, points: ["Magnetic snap-on design holds to the back of compatible phones", "Wireless charging, plus a cable port for wired charging", "Slim and light enough for a pocket or small bag", "Great for travel, commutes and long days out"] },
-  { id: "fleece-tights", name: "Fleece-Lined Sheer-Look Tights", blurb: "Look like sheer tights, but lined with thick 300g fleece inside. Stretchy and warm for fall and winter.", price: 19.99, was: 29.99, img: "images/fleece-tights.jpg", icon: "posture", photos: 4, points: ["Sheer skin-tone look from the outside", "Thick 300g fleece lining keeps legs warm", "Stretchy, high-waist fit", "Footed style (Black and translucent footstep)"] },
-  { id: "fuzzy-socks", name: "Fuzzy Over-the-Knee Socks", blurb: "Thick plush socks that cover your knees on cold nights. One size, stretches to fit.", price: 16.99, was: 24.99, img: "images/fuzzy-socks.jpg", icon: "posture", photos: 3, points: ["Extra-long, over-the-knee length", "Thick, soft plush fuzz", "One size, fits foot length about 9 to 10 in", "Color: Silver Gray"] },
-  { id: "lip-oil", name: "Jelly Tinted Lip Oil", blurb: "Glossy, non-sticky lip oil with a sheer pink tint. Moisturizes all day. 4.8ml with a doe-foot applicator.", price: 14.99, was: 22.99, img: "images/lip-oil.jpg", icon: "cup", photos: 4, points: ["Glossy, non-sticky finish", "Sheer pink tint (shade 02)", "Doe-foot applicator", "4.8 ml"] },
-  { id: "magnetic-lashes", name: "Magnetic Lash Kit", blurb: "Reusable magnetic lashes that clip on in seconds. No glue. One pair plus applicator.", price: 16.99, was: 26.99, img: "images/magnetic-lashes.jpg", icon: "sun", photos: 3, points: ["No glue needed", "Includes 1 pair of lashes and an applicator clip", "Reusable", "Beginner-friendly"] },
-  { id: "whitening-pen", name: "Teeth Whitening Pen", blurb: "Brush-on whitening gel with mint for coffee and tea stains. Twist, paint on after brushing, done.", price: 19.99, was: 29.99, img: "images/whitening-pen.jpg", icon: "scrub", photos: 4, points: ["Brush-on pen, no strips or trays", "Mint, clove leaf and chrysanthemum extracts", "Use after brushing your teeth", "Pocket size"] },
-  { id: "coconut-perfume", name: "Warm Coconut Perfume", blurb: "Coconut, vanilla and sandalwood. The beach-vacation scent, all year.", price: 19.99, was: 29.99, img: "images/coconut-perfume.jpg", icon: "cup", photos: 4, points: ["Notes: coconut, vanilla, sandalwood", "Spray on wrists and neck", "Gift-ready box"] },
-  { id: "face-neck-massager", name: "Face & Neck Massager", blurb: "Handheld massager with 3 modes and gentle heat for your face and neck routine. USB rechargeable.", price: 44.99, was: 69.99, img: "images/face-neck-massager.jpg", icon: "posture", photos: 4, points: ["3 massage modes", "Gentle heat setting", "USB rechargeable", "Results vary from person to person"] },
-  { id: "rose-necklace-box", name: "Eternal Rose Necklace Gift Box", blurb: "Preserved rose in an apple-shaped box that opens to a silver love-knot necklace and card.", price: 34.99, was: 54.99, img: "images/rose-necklace-box.jpg", icon: "chain", photos: 4, points: ["Preserved rose that lasts", "Silver-tone love-knot necklace inside", "Message card included", "Gift box packaging"] },
-  { id: "clover-heart-necklace", name: "4-Hearts Clover Necklace", blurb: "Four magnetic hearts that click together into a clover or open into a row. Rose-gold tone.", price: 14.99, was: 24.99, img: "images/clover-heart-necklace.jpg", icon: "chain", photos: 3, points: ["Magnetic hearts fold into a clover", "Wear it as a clover or a row of 4 hearts", "Rose-gold tone"] },
-  { id: "car-charger-100w", name: "100W Retractable Car Charger", blurb: "Two built-in retractable USB-C cables plus extra ports. Up to 100W fast charging.", price: 34.99, was: 49.99, img: "images/car-charger-100w.jpg", icon: "battery", photos: 4, points: ["2 built-in retractable USB-C cables", "Up to 100W total fast charging", "Adjustable head", "Fits standard car 12V sockets"] },
-  { id: "magnetic-led-cable", name: "Glowing Magnetic Charging Cable", blurb: "Light flows along the cable while it charges. Magnetic tip snaps on one-handed. USB-C.", price: 16.99, was: 24.99, img: "images/magnetic-led-cable.jpg", icon: "phone", photos: 4, points: ["Flowing LED light while charging", "Magnetic tip, one-handed connect", "USB-C connector", "Colorful light"] },
-  { id: "wireless-charger-stand", name: "Foldable Magnetic Wireless Charger", blurb: "Folds flat for travel and charges your phone at up to 15W. Comes with a carry case.", price: 29.99, was: 44.99, img: "images/wireless-charger-stand.jpg", icon: "battery", photos: 5, points: ["Up to 15W wireless charging", "Foldable design", "USB-C input", "Carry case included"] },
-  { id: "garment-steamer", name: "Mini Handheld Steamer", blurb: "33W travel steamer that smooths wrinkles hanging or flat. US plug.", price: 29.99, was: 44.99, img: "images/garment-steamer.jpg", icon: "scrub", photos: 3, points: ["33W handheld steamer", "Works hanging or as a flat iron", "US plug", "Color: Light Purple"] },
-  { id: "oil-sprayer", name: "Oil Mist Sprayer Bottle", blurb: "Fine mist for oil, vinegar or lemon juice. Made for air fryers and salads.", price: 16.99, was: 24.99, img: "images/oil-sprayer.jpg", icon: "cup", photos: 4, points: ["Fine mist spray", "Works with oil, vinegar, soy sauce, lemon juice", "Easy to refill and clean", "Silver"] },
-  { id: "lint-roller", name: "Reusable Lint & Pet Hair Roller", blurb: "Rinse it under the tap instead of buying refills. Clothes, couch and car seats.", price: 19.99, was: 29.99, img: "images/lint-roller.jpg", icon: "scrub", photos: 2, points: ["Washable and reusable", "Lifts pet hair, lint and crumbs", "For clothes, bedding, sofas and car seats"] },
-  { id: "projection-humidifier", name: "Mini Humidifier with Light Projector", blurb: "Quiet USB mist humidifier with a glowing projection light. Under 30dB.", price: 27.99, was: 39.99, img: "images/projection-humidifier.jpg", icon: "sun", photos: 4, points: ["Under 30 dB quiet", "Projection night light", "USB powered", "Color: Pink"] },
-  { id: "bunny-night-light", name: "Squishy Bunny Night Light", blurb: "Soft silicone bunny lamp. Tap to change brightness. Doubles as a stress squish.", price: 27.99, was: 39.99, img: "images/bunny-night-light.jpg", icon: "sun", photos: 4, points: ["Soft, squishy silicone", "Touch control, 3 brightness levels", "Cute bedside or desk light"] },
-  { id: "pet-hair-glove", name: "Pet Hair Remover Glove", blurb: "Pet them while you groom. Lifts loose fur from cats and dogs in a few strokes.", price: 12.99, was: 19.99, img: "images/pet-hair-glove.jpg", icon: "bag", photos: 3, points: ["Gentle silicone grooming surface", "For cats and dogs", "Easy to rinse clean", "Black"] },
-  { id: "jumping-fish-toy", name: "Flopping Fish Cat Toy", blurb: "Realistic fish that flips and wiggles when your cat touches it. USB rechargeable.", price: 19.99, was: 29.99, img: "images/jumping-fish-toy.jpg", icon: "bag", photos: 2, points: ["Moves when touched", "Realistic fish design", "USB rechargeable", "No catnip version"] }
+  { id: "snowy-night-light", cats: "home gifts", name: "Snowy Street Lamp Night Light Kit", blurb: "Build a tiny street lamp glowing over a snow-filled scene in a clear case. Easy DIY kit with step-by-step guide and gift bag.", price: 24.99, was: 34.99, img: "images/snowy-night-light.jpg", icon: "sun", photos: 3, points: ["Warm glowing lamp over a snowy scene", "Easy DIY kit with step-by-step guide", "Clear case looks great on a shelf or nightstand", "Comes with a gift bag, ready to give"] },
+  { id: "glow-drawing-board", cats: "gifts", name: "Glow-in-the-Dark Drawing Board", blurb: "Kids draw with a light pen and the picture glows, then fades for a fresh start. Large A3 board with stencils. Ages 3+.", price: 27.99, was: 39.99, img: "images/glow-drawing-board.jpg", icon: "sun", photos: 3, points: ["Large A3 glow board with light pen", "Drawings glow, then fade in about 30 minutes", "Stencils included for letters and shapes", "Screen-free fun for ages 3+"] },
+  { id: "rose-speaker-lamp", cats: "home tech gifts", name: "Glowing Rose Lamp & Bluetooth Speaker", blurb: "A pink rose with fairy lights under a glass dome, on a black base that doubles as a Bluetooth speaker.", price: 49.99, was: 69.99, img: "images/rose-speaker-lamp.jpg", icon: "sun", photos: 3, points: ["Glowing rose with fairy lights under a glass dome", "Base doubles as a Bluetooth speaker", "Cozy night light for a bedroom or desk", "A gift for Christmas, birthdays or Valentine's Day"] },
+  { id: "satin-sleep-set", cats: "beauty gifts", name: "4-Piece Satin Sleep Set", blurb: "Champagne satin pillowcase, eye mask, scrunchie and headband. Gentle on hair and skin, gift-ready.", price: 29.99, was: 44.99, img: "images/satin-sleep-set.jpg", icon: "posture", photos: 1, points: ["Satin pillowcase (19 x 26 in) that's gentle on hair and skin", "Eye mask blocks out light", "Matching scrunchie and headband", "Gift-ready set for her or a stocking stuffer"] },
+  { id: "gnome-night-light", cats: "home gifts", name: "Holiday Gnome 3D Night Light", blurb: "Two glowing gnomes etched in clear acrylic on a wood-look base. Warm white, USB powered. The easy holiday gift.", price: 24.99, was: 34.99, img: "images/gnome-night-light.jpg", icon: "sun", photos: 3, points: ["3D gnome design that glows warm white", "Wood-look base, USB powered", "Looks great on a shelf, nightstand or desk", "An easy holiday gift or Secret Santa pick"] },
+  { id: "butterfly-earrings", cats: "fashion gifts", name: "Butterfly Ear Cuff Earrings", blurb: "Sparkly rhinestone butterflies that climb up the ear. Silver tone, comes as a pair.", price: 12.99, was: 19.99, img: "images/butterfly-earrings.jpg", icon: "chain", photos: 4, points: ["Rhinestone butterflies in a silver tone", "Climber style that follows the curve of the ear", "Comes as a pair", "Dresses up any outfit in seconds"] },
+  { id: "cat-paw-mug", cats: "home pets gifts", name: "Cat Paw Frosted Glass Cup", blurb: "Frosted glass cup with a paw-shaped bottom and tabby stripes. For coffee, tea or milk.", price: 24.99, was: 34.99, img: "images/cat-paw-mug.jpg", icon: "cup", photos: 4, points: ["Paw-shaped bottom that shows as you drink", "Frosted glass with orange tabby stripes", "Holds coffee, tea, milk or juice", "A sweet gift for any cat lover"] },
+  { id: "magsafe-powerbank", cats: "tech gifts", name: "Magnetic Snap-On Power Bank", blurb: "10,000mAh pack that snaps onto the back of your phone. 15W wireless and 20W wired fast charging.", price: 34.99, was: 49.99, img: "images/magsafe-powerbank.jpg", icon: "battery", photos: 4, points: ["Magnetic snap-on design holds to the back of compatible phones", "Wireless charging, plus a cable port for wired charging", "Slim and light enough for a pocket or small bag", "Great for travel, commutes and long days out"] },
+  { id: "fleece-tights", cats: "fashion", name: "Fleece-Lined Sheer-Look Tights", blurb: "Look like sheer tights, but lined with thick 300g fleece inside. Stretchy and warm for fall and winter.", price: 19.99, was: 29.99, img: "images/fleece-tights.jpg", icon: "posture", photos: 4, points: ["Sheer skin-tone look from the outside", "Thick 300g fleece lining keeps legs warm", "Stretchy, high-waist fit", "Footed style (Black and translucent footstep)"] },
+  { id: "fuzzy-socks", cats: "fashion gifts", name: "Fuzzy Over-the-Knee Socks", blurb: "Thick plush socks that cover your knees on cold nights. One size, stretches to fit.", price: 16.99, was: 24.99, img: "images/fuzzy-socks.jpg", icon: "posture", photos: 3, points: ["Extra-long, over-the-knee length", "Thick, soft plush fuzz", "One size, fits foot length about 9 to 10 in", "Color: Silver Gray"] },
+  { id: "lip-oil", cats: "beauty", name: "Jelly Tinted Lip Oil", blurb: "Glossy, non-sticky lip oil with a sheer pink tint. Moisturizes all day. 4.8ml with a doe-foot applicator.", price: 14.99, was: 22.99, img: "images/lip-oil.jpg", icon: "cup", photos: 4, points: ["Glossy, non-sticky finish", "Sheer pink tint (shade 02)", "Doe-foot applicator", "4.8 ml"] },
+  { id: "magnetic-lashes", cats: "beauty", name: "Magnetic Lash Kit", blurb: "Reusable magnetic lashes that clip on in seconds. No glue. One pair plus applicator.", price: 16.99, was: 26.99, img: "images/magnetic-lashes.jpg", icon: "sun", photos: 3, points: ["No glue needed", "Includes 1 pair of lashes and an applicator clip", "Reusable", "Beginner-friendly"] },
+  { id: "whitening-pen", cats: "beauty", name: "Teeth Whitening Pen", blurb: "Brush-on whitening gel with mint for coffee and tea stains. Twist, paint on after brushing, done.", price: 19.99, was: 29.99, img: "images/whitening-pen.jpg", icon: "scrub", photos: 4, points: ["Brush-on pen, no strips or trays", "Mint, clove leaf and chrysanthemum extracts", "Use after brushing your teeth", "Pocket size"] },
+  { id: "coconut-perfume", cats: "beauty gifts", name: "Warm Coconut Perfume", blurb: "Coconut, vanilla and sandalwood. The beach-vacation scent, all year.", price: 19.99, was: 29.99, img: "images/coconut-perfume.jpg", icon: "cup", photos: 4, points: ["Notes: coconut, vanilla, sandalwood", "Spray on wrists and neck", "Gift-ready box"] },
+  { id: "face-neck-massager", cats: "beauty gifts", name: "Face & Neck Massager", blurb: "Handheld massager with 3 modes and gentle heat for your face and neck routine. USB rechargeable.", price: 44.99, was: 69.99, img: "images/face-neck-massager.jpg", icon: "posture", photos: 4, points: ["3 massage modes", "Gentle heat setting", "USB rechargeable", "Results vary from person to person"] },
+  { id: "rose-necklace-box", cats: "fashion gifts", name: "Eternal Rose Necklace Gift Box", blurb: "Preserved rose in an apple-shaped box that opens to a silver love-knot necklace and card.", price: 34.99, was: 54.99, img: "images/rose-necklace-box.jpg", icon: "chain", photos: 4, points: ["Preserved rose that lasts", "Silver-tone love-knot necklace inside", "Message card included", "Gift box packaging"] },
+  { id: "clover-heart-necklace", cats: "fashion gifts", name: "4-Hearts Clover Necklace", blurb: "Four magnetic hearts that click together into a clover or open into a row. Rose-gold tone.", price: 14.99, was: 24.99, img: "images/clover-heart-necklace.jpg", icon: "chain", photos: 3, points: ["Magnetic hearts fold into a clover", "Wear it as a clover or a row of 4 hearts", "Rose-gold tone"] },
+  { id: "car-charger-100w", cats: "tech", name: "100W Retractable Car Charger", blurb: "Two built-in retractable USB-C cables plus extra ports. Up to 100W fast charging.", price: 34.99, was: 49.99, img: "images/car-charger-100w.jpg", icon: "battery", photos: 4, points: ["2 built-in retractable USB-C cables", "Up to 100W total fast charging", "Adjustable head", "Fits standard car 12V sockets"] },
+  { id: "magnetic-led-cable", cats: "tech", name: "Glowing Magnetic Charging Cable", blurb: "Light flows along the cable while it charges. Magnetic tip snaps on one-handed. USB-C.", price: 16.99, was: 24.99, img: "images/magnetic-led-cable.jpg", icon: "phone", photos: 4, points: ["Flowing LED light while charging", "Magnetic tip, one-handed connect", "USB-C connector", "Colorful light"] },
+  { id: "wireless-charger-stand", cats: "tech", name: "Foldable Magnetic Wireless Charger", blurb: "Folds flat for travel and charges your phone at up to 15W. Comes with a carry case.", price: 29.99, was: 44.99, img: "images/wireless-charger-stand.jpg", icon: "battery", photos: 5, points: ["Up to 15W wireless charging", "Foldable design", "USB-C input", "Carry case included"] },
+  { id: "garment-steamer", cats: "home", name: "Mini Handheld Steamer", blurb: "33W travel steamer that smooths wrinkles hanging or flat. US plug.", price: 29.99, was: 44.99, img: "images/garment-steamer.jpg", icon: "scrub", photos: 3, points: ["33W handheld steamer", "Works hanging or as a flat iron", "US plug", "Color: Light Purple"] },
+  { id: "oil-sprayer", cats: "home", name: "Oil Mist Sprayer Bottle", blurb: "Fine mist for oil, vinegar or lemon juice. Made for air fryers and salads.", price: 16.99, was: 24.99, img: "images/oil-sprayer.jpg", icon: "cup", photos: 4, points: ["Fine mist spray", "Works with oil, vinegar, soy sauce, lemon juice", "Easy to refill and clean", "Silver"] },
+  { id: "lint-roller", cats: "home pets", name: "Reusable Lint & Pet Hair Roller", blurb: "Rinse it under the tap instead of buying refills. Clothes, couch and car seats.", price: 19.99, was: 29.99, img: "images/lint-roller.jpg", icon: "scrub", photos: 2, points: ["Washable and reusable", "Lifts pet hair, lint and crumbs", "For clothes, bedding, sofas and car seats"] },
+  { id: "projection-humidifier", cats: "home", name: "Mini Humidifier with Light Projector", blurb: "Quiet USB mist humidifier with a glowing projection light. Under 30dB.", price: 27.99, was: 39.99, img: "images/projection-humidifier.jpg", icon: "sun", photos: 4, points: ["Under 30 dB quiet", "Projection night light", "USB powered", "Color: Pink"] },
+  { id: "bunny-night-light", cats: "home gifts", name: "Squishy Bunny Night Light", blurb: "Soft silicone bunny lamp. Tap to change brightness. Doubles as a stress squish.", price: 27.99, was: 39.99, img: "images/bunny-night-light.jpg", icon: "sun", photos: 4, points: ["Soft, squishy silicone", "Touch control, 3 brightness levels", "Cute bedside or desk light"] },
+  { id: "pet-hair-glove", cats: "pets", name: "Pet Hair Remover Glove", blurb: "Pet them while you groom. Lifts loose fur from cats and dogs in a few strokes.", price: 12.99, was: 19.99, img: "images/pet-hair-glove.jpg", icon: "bag", photos: 3, points: ["Gentle silicone grooming surface", "For cats and dogs", "Easy to rinse clean", "Black"] },
+  { id: "jumping-fish-toy", cats: "pets", name: "Flopping Fish Cat Toy", blurb: "Realistic fish that flips and wiggles when your cat touches it. USB rechargeable.", price: 19.99, was: 29.99, img: "images/jumping-fish-toy.jpg", icon: "bag", photos: 2, points: ["Moves when touched", "Realistic fish design", "USB rechargeable", "No catnip version"] }
 ];
 
 const ICONS = {
@@ -320,8 +428,17 @@ const byId = (id) => PRODUCTS.find((p) => p.id === id);
 
 const photosOf = (p) => p.img ? [p.img, ...Array.from({ length: Math.max(0, (p.photos || 1) - 1) }, (_, i) => p.img.replace(/\.jpg$/, `-${i + 2}.jpg`))] : [];
 
-function renderGrid() {
-  $("grid").innerHTML = PRODUCTS.map((p, i) => `
+const CATS = [["all", "All"], ["gifts", "🎁 Gifts"], ["home", "Home"], ["beauty", "Beauty"], ["tech", "Tech"], ["fashion", "Fashion & Jewelry"], ["pets", "Pets"]];
+const view = { q: "", cat: "all", sort: "trend" };
+const norm = (t) => t.toLowerCase().replace(/[^a-z0-9$.]+/g, " ").trim();
+const haystack = (p) => norm([p.name, p.blurb, (p.points || []).join(" "), p.cats].join(" "));
+const hasWord = (h, w) => (" " + h).includes(" " + w.replace(/(es|s)$/, ""));
+const matches = (p, q) => norm(q).split(" ").filter(Boolean).every((w) => hasWord(haystack(p), w));
+const inCat = (p, c) => c === "all" || (p.cats || "").split(" ").includes(c);
+
+function card(p) {
+  const i = PRODUCTS.indexOf(p);
+  return `
     <article class="card">
       <a class="thumb" href="#p/${p.id}" aria-label="View ${p.name}"><span class="rank">#${i + 1} trending</span>
         ${p.img ? `<img src="${p.img}" alt="${p.name}" loading="lazy">` : `<svg viewBox="0 0 64 64" aria-hidden="true">${ICONS[p.icon]}</svg>`}
@@ -333,10 +450,31 @@ function renderGrid() {
         <div class="buy"><span class="price">${money(p.price)}<s>${money(p.was)}</s></span>
           <button class="add" type="button" data-add="${p.id}">Add to cart</button></div>
       </div>
-    </article>`).join("");
-  const names = PRODUCTS.map((p) => `<span>${p.name}</span>`).join("");
-  $("ticker").innerHTML = names + names;
+    </article>`;
 }
+
+function renderGrid() {
+  let list = PRODUCTS.filter((p) => inCat(p, view.cat) && matches(p, view.q));
+  if (view.sort === "low") list = [...list].sort((a, b) => a.price - b.price);
+  if (view.sort === "high") list = [...list].sort((a, b) => b.price - a.price);
+  $("grid").innerHTML = list.length ? list.map(card).join("")
+    : `<div class="no-results"><b>No matches for “${view.q.replace(/[<>&"]/g, "")}”</b>Try another word, or browse everything.<button class="btn" type="button" id="reset-filters">Show all products</button></div>`;
+  $("chips").innerHTML = CATS.map(([k, label]) => {
+    const n = PRODUCTS.filter((p) => inCat(p, k) && matches(p, view.q)).length;
+    return `<button type="button" data-cat="${k}" aria-pressed="${view.cat === k}">${label}<small>${n}</small></button>`;
+  }).join("");
+  $("q-clear").hidden = !view.q;
+}
+function resetFilters() { view.q = ""; view.cat = "all"; $("q").value = ""; renderGrid(); }
+$("q").addEventListener("input", (e) => { view.q = e.target.value; renderGrid(); });
+$("q").addEventListener("keydown", (e) => { if (e.key === "Enter") { e.target.blur(); } });
+$("q-clear").onclick = () => { view.q = ""; $("q").value = ""; renderGrid(); $("q").focus(); };
+$("sort").onchange = (e) => { view.sort = e.target.value; renderGrid(); };
+$("chips").addEventListener("click", (e) => { const b = e.target.closest("[data-cat]"); if (b) { view.cat = b.dataset.cat; renderGrid(); } });
+$("grid").addEventListener("click", (e) => { if (e.target.id === "reset-filters") resetFilters(); });
+{ const names = PRODUCTS.map((p) => `<span>${p.name}</span>`).join(""); $("ticker").innerHTML = names + names; }
+const setBarH = () => document.documentElement.style.setProperty("--bar-h", document.querySelector(".bar").offsetHeight + "px");
+setBarH(); window.addEventListener("resize", setBarH);
 
 /* Product view: opens from #p/<id> links so each product has a shareable address */
 const pd = $("pd");
@@ -467,6 +605,100 @@ function loadPayPal() {
   s.onerror = () => { $("pay-fallback").hidden = false; };
   document.head.appendChild(s);
 }
+
+/* Contact form: opens the shopper's email app with the message filled in */
+$("contact-mail").textContent = STORE.contactEmail;
+$("contact-mail").href = `mailto:${STORE.contactEmail}`;
+$("copy-mail").onclick = (e) => {
+  try { navigator.clipboard.writeText(STORE.contactEmail).then(() => { e.target.textContent = "Copied"; }); } catch (err) {}
+};
+$("contact-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const f = new FormData(e.target);
+  const subject = `${f.get("topic")}${f.get("order") ? " (order " + f.get("order") + ")" : ""}`;
+  const body = `${f.get("message")}\n\nName: ${f.get("name")}\nEmail: ${f.get("email")}${f.get("order") ? "\nOrder number: " + f.get("order") : ""}`;
+  location.href = `mailto:${STORE.contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  $("contact-sent").hidden = false;
+});
+
+/* Help chat: answers store questions and finds products from the catalog, all inside the page */
+const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const FAQ = [
+  { k: /\b(international|canada|uk|europe|australia|mexico|outside)/, a: "Right now we only ship to US addresses. Shipping inside the US is free and takes 3–8 business days." },
+  { k: /\b(ship|shipping|deliver|delivery|arrive|how long|when will)/, a: "Shipping is free on every order. Items ship from US warehouses and most orders arrive in 3–8 business days. We currently ship within the US only." },
+  { k: /\b(track|tracking|where.*order|order status|hasn.?t arrived|not arrived)/, a: "You get a tracking number by email as soon as your order ships. Can't find it? <a href=\"#contact-us\" data-close-chat>Message us</a> with your order number and we'll look it up." },
+  { k: /\b(return|refund|money back|exchange|broken|damaged|defective|wrong item)/, a: "Every order has a 30-day money-back guarantee. Email us within 30 days of delivery with your order number and we refund you in full. You don't need to send anything back." },
+  { k: /\b(pay|paypal|card|credit|debit|checkout|apple pay|afterpay|klarna)/, a: "Checkout is through PayPal. You don't need a PayPal account: choose “Debit or Credit Card”. We never see your card number." },
+  { k: /\b(contact|human|person|agent|talk to|email|customer service|support)/, a: "You can reach a real person anytime. <a href=\"#contact-us\" data-close-chat>Open the contact form</a> or email " },
+  { k: /\b(discount|coupon|promo|code|sale)/, a: "Prices already include our launch discount, and shipping is always free. There's no coupon code needed." },
+  { k: /^(hi|hey|hello|yo|sup|good (morning|afternoon|evening))\b/, a: "Hey! 👋 I can help you find a product or answer questions about shipping, returns and payment. What are you looking for?" },
+  { k: /\b(thank|thanks|thx|ty)\b/, a: "You're welcome! Anything else I can help with?" }
+];
+const CAT_WORDS = [
+  ["gifts", /\b(gift|gifts|present|christmas|xmas|holiday|stocking|her|him|mom|dad|girlfriend|boyfriend|wife|husband|kid|kids|teen)/],
+  ["pets", /\b(pet|pets|cat|cats|dog|dogs|kitten|puppy)/],
+  ["beauty", /\b(beauty|makeup|skin|skincare|lip|lash|perfume|self.?care)/],
+  ["tech", /\b(tech|phone|iphone|charger|charging|cable|gadget|car)/],
+  ["home", /\b(home|decor|room|bedroom|kitchen|light|lamp|cozy)/],
+  ["fashion", /\b(fashion|jewelry|necklace|earring|earrings|socks|tights|outfit|wear)/]
+];
+const STOP = new Set("a an the i im i'm me my for to of and or is are do you have any some show find looking look want need something gift gifts under below less than cheap with that this what whats good best".split(" "));
+function findProducts(text) {
+  const t = text.toLowerCase();
+  const max = (t.match(/(?:under|below|less than|max|<)\s*\$?\s*(\d+)/) || [])[1];
+  const cats = CAT_WORDS.filter(([, re]) => re.test(t)).map(([c]) => c);
+  const words = norm(t).split(" ").filter((w) => w.length > 2 && !STOP.has(w) && !/^\d+$/.test(w));
+  let list = PRODUCTS.map((p) => {
+    const h = haystack(p);
+    let score = words.reduce((n, w) => n + (hasWord(h, w) ? 2 : 0), 0);
+    score += cats.filter((c) => inCat(p, c)).length;
+    return { p, score };
+  }).filter(({ p, score }) => (!max || p.price <= Number(max)) && (score > 0 || (max && !words.length && !cats.length)));
+  list.sort((a, b) => b.score - a.score || PRODUCTS.indexOf(a.p) - PRODUCTS.indexOf(b.p));
+  return { items: list.slice(0, 4).map((x) => x.p), max, any: words.length || cats.length || max };
+}
+function answer(text) {
+  const t = text.toLowerCase().trim();
+  const faq = FAQ.find((f) => f.k.test(t));
+  const found = findProducts(t);
+  if (faq && !(found.items.length && /gift|show|find|looking|recommend|under|\$/.test(t))) {
+    return { html: faq.a + (faq.a.endsWith("email ") ? `<a href="mailto:${STORE.contactEmail}">${STORE.contactEmail}</a>.` : "") };
+  }
+  if (found.items.length) {
+    return { html: `Here ${found.items.length > 1 ? "are some picks" : "is a pick"}${found.max ? ` under $${found.max}` : ""} 👇 Tap one for photos and details.`, items: found.items };
+  }
+  if (found.max) return { html: `I couldn't find anything under $${found.max}. Our lowest price is ${money(Math.min(...PRODUCTS.map((p) => p.price)))}.` };
+  return { html: `I'm not sure about that one. Try asking about a product (like “cat gifts” or “phone charger”), or <a href="#contact-us" data-close-chat>message our team</a> and a person will reply within one business day.` };
+}
+function say(html, who = "bot", items) {
+  const log = $("chat-log");
+  log.insertAdjacentHTML("beforeend", `<div class="msg ${who}">${html}</div>`);
+  if (items) log.insertAdjacentHTML("beforeend", `<div class="picks">${items.map((p) => `<a class="pick" href="#p/${p.id}"><img src="${p.img}" alt=""><span>${esc(p.name)}</span><em>${money(p.price)}</em></a>`).join("")}</div>`);
+  log.scrollTop = log.scrollHeight;
+}
+function ask(text) {
+  if (!text.trim()) return;
+  say(esc(text), "me");
+  const r = answer(text);
+  setTimeout(() => say(r.html, "bot", r.items), 350);
+}
+const QUICK = ["🎁 Gifts under $25", "How long is shipping?", "Returns & refunds", "Track my order", "Cat lover gifts", "Talk to a person"];
+function openChat(open) {
+  $("chat").hidden = !open; $("chat-open").hidden = open;
+  if (open && !$("chat-log").children.length) {
+    say("Hi! 👋 I'm the ScrollStop helper. Ask me to find a product, or about shipping, returns and payment.");
+    $("chat-quick").innerHTML = QUICK.map((q) => `<button type="button">${q}</button>`).join("");
+  }
+  if (open && matchMedia("(min-width: 521px)").matches) $("chat-in").focus();
+}
+$("chat-open").onclick = () => openChat(true);
+$("chat-close").onclick = () => openChat(false);
+$("chat-quick").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) ask(b.textContent.replace(/^\W+/, "")); });
+$("chat-form").addEventListener("submit", (e) => { e.preventDefault(); ask($("chat-in").value); $("chat-in").value = ""; });
+$("chat-log").addEventListener("click", (e) => {
+  const a = e.target.closest("a"); if (!a) return;
+  if (a.hasAttribute("data-close-chat") || (a.classList.contains("pick") && matchMedia("(max-width: 520px)").matches)) openChat(false);
+});
 
 $("store-name").textContent = STORE.name;
 $("contact-email").textContent = STORE.contactEmail;
