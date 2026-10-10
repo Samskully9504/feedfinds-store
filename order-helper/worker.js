@@ -1,5 +1,6 @@
 // ScrollStop order helper (Cloudflare Worker).
 // After a customer pays on scrollstop.world, the site sends the PayPal order ID here.
+// It also receives Contact us messages from the site and sends them to your phone (ntfy).
 // This checks the payment with PayPal, then creates the matching order in CJ Dropshipping
 // with the customer's address. The CJ order is created UNPAID: you tap Pay in CJ > My Orders.
 //
@@ -45,6 +46,21 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 async function notify(env, title, message) {
   if (!env.NTFY_TOPIC) return;
   try { await fetch(`https://ntfy.sh/${env.NTFY_TOPIC}`, { method: "POST", headers: { Title: title }, body: message }); } catch (e) {}
+}
+
+// Contact us form -> phone alert with the shopper's message and a Reply by email button.
+async function handleContact(env, d) {
+  const clip = (v, n) => String(v || "").replace(/\s+/g, " ").trim().slice(0, n);
+  if (d.website) return json({ ok: true, contact: true }); // hidden field only bots fill in
+  const email = clip(d.email, 120), message = String(d.message || "").trim().slice(0, 2000);
+  if (!/^[^\s,;@]+@[^\s,;@]+\.[^\s,;@]+$/.test(email) || !message) return json({ ok: false, contact: true, error: "email and message are required" }, 400);
+  if (!env.NTFY_TOPIC) return json({ ok: false, contact: true, error: "alerts not set up" }, 500);
+  const order = clip(d.order, 40), topic = clip(d.topic, 60) || "Message";
+  const body = `${message}\n\nFrom: ${clip(d.name, 80) || "(no name)"} <${email}>${order ? `\nOrder: ${order}` : ""}`;
+  const subject = encodeURIComponent(`Re: ${topic}${order ? ` (order ${order})` : ""}`);
+  const r = await fetch(`https://ntfy.sh/${env.NTFY_TOPIC}`, { method: "POST", body: `${topic}\n${body}`,
+    headers: { Title: "New ScrollStop customer message", Tags: "email", Actions: `view, Reply by email, mailto:${email}?subject=${subject}` } });
+  return r.ok ? json({ ok: true, contact: true }) : json({ ok: false, contact: true, error: "alert failed" }, 502);
 }
 
 async function paypalOrder(env, id) {
@@ -145,7 +161,9 @@ export default {
     if (request.method !== "POST") return new Response("ScrollStop order helper is running.", { headers: cors });
     let orderId = "";
     try {
-      orderId = String((await request.json()).orderID || "").slice(0, 40);
+      const data = await request.json();
+      if (data.type === "contact") return await handleContact(env, data);
+      orderId = String(data.orderID || "").slice(0, 40);
       if (!/^[A-Z0-9]+$/.test(orderId)) return json({ ok: false, error: "missing order ID" }, 400);
       const r = await handleOrder(env, orderId);
       await notify(env, "New order sent to CJ", `PayPal ${orderId}: ${r.items.map((i) => `${i.qty}x ${i.id}`).join(", ")}. ${r.cjOrders > 1 ? `Split into ${r.cjOrders} CJ orders. ` : ""}Open CJ > My Orders and tap Pay.`);
