@@ -42,7 +42,7 @@
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
-body { background: var(--bg); color: var(--ink); font: 400 16px/1.55 var(--body); margin: 0; }
+body { background: var(--bg); color: var(--ink); font: 400 16px/1.55 var(--body); margin: 0; overflow-x: clip; }
 .wrap { max-width: 1120px; margin: 0 auto; padding-inline: 16px; }
 a { color: inherit; }
 button { font: inherit; cursor: pointer; }
@@ -56,18 +56,56 @@ button { font: inherit; cursor: pointer; }
 .cart-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--ink); color: var(--bg); border: 0; border-radius: 999px; padding: 9px 16px; font-weight: 600; }
 .cart-btn b { background: var(--accent); color: var(--accent-ink); border-radius: 999px; min-width: 22px; padding: 0 6px; font: 500 13px/22px var(--mono); text-align: center; }
 
-.hero { padding-block: 40px 24px; display: grid; gap: 12px; }
+.hero { position: relative; padding-block: 36px 28px; display: grid; gap: 32px; align-items: center; }
+.hero::before, .hero::after { content: ""; position: absolute; z-index: -1; border-radius: 50%; filter: blur(60px); opacity: .35; pointer-events: none; }
+.hero::before { width: 340px; height: 340px; background: var(--accent); top: 10px; right: 8%; }
+.hero::after { width: 280px; height: 280px; background: var(--cyan); bottom: 0; right: 32%; }
+.hero-copy { display: grid; gap: 14px; justify-items: start; }
 .eyebrow { font: 500 12px/1 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--cyan); }
-.hero h1 { font: 800 clamp(34px, 6vw, 60px)/1.02 var(--display); letter-spacing: -0.03em; margin: 0; max-width: 16ch; text-wrap: balance; }
-.hero h1 em { font-style: normal; color: var(--accent); }
-.hero p { margin: 0; color: var(--muted); max-width: 56ch; font-size: 17px; }
-.promises { display: flex; flex-wrap: wrap; gap: 8px 20px; padding-block: 8px 28px; font-size: 14px; color: var(--muted); }
+.hero .eyebrow { background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 8px 12px; display: inline-flex; gap: 8px; align-items: center; }
+.hero .eyebrow i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 25%, transparent); animation: pulse 1.8s ease-in-out infinite; }
+@keyframes pulse { 50% { box-shadow: 0 0 0 8px color-mix(in srgb, var(--accent) 0%, transparent); } }
+.hero h1 { font: 800 clamp(36px, 6.2vw, 64px)/1.0 var(--display); letter-spacing: -0.035em; margin: 0; max-width: 15ch; text-wrap: balance; }
+.hero h1 em { font-style: normal; background: linear-gradient(100deg, var(--accent), #ff8a3d 60%, var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero p { margin: 0; color: var(--muted); max-width: 48ch; font-size: 17px; }
+.cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; border-radius: 999px; padding: 13px 22px; font-weight: 600; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: transparent; box-shadow: 0 10px 24px -10px var(--accent); }
+.collage { position: relative; display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 10px; aspect-ratio: 5 / 4; max-width: 560px; width: 100%; justify-self: center; }
+.collage figure { margin: 0; border-radius: 22px; overflow: hidden; background: var(--tile); box-shadow: 0 18px 40px -22px rgba(20, 10, 40, .55); }
+.collage img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.collage .p1 { grid-column: 1 / 3; grid-row: 1 / 3; transform: rotate(-2deg); }
+.collage .p2 { grid-column: 3; grid-row: 1; transform: rotate(3deg); }
+.collage .p3 { grid-column: 3; grid-row: 2; transform: rotate(-3deg); }
+.sticker { position: absolute; z-index: 2; font: 600 13px/1.1 var(--body); background: var(--surface); color: var(--ink); border-radius: 14px; padding: 9px 12px; box-shadow: 0 10px 30px -12px rgba(20, 10, 40, .5); border: 1px solid var(--line); display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+.sticker.s1 { left: -6px; bottom: 14%; transform: rotate(-4deg); }
+.sticker.s2 { right: -4px; top: -10px; background: var(--accent); color: var(--accent-ink); border-color: transparent; transform: rotate(5deg); font: 800 15px/1 var(--display); }
+.sticker.s3 { right: 30%; bottom: -12px; font-family: var(--mono); font-weight: 500; transform: rotate(2deg); }
+.sticker .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); }
+@media (min-width: 860px) { .hero { grid-template-columns: 1.05fr 1fr; padding-block: 56px 40px; } }
+@media (max-width: 520px) { .hero .when { display: none; } .sticker { font-size: 12px; padding: 7px 10px; } .sticker.s2 { font-size: 13px; } .collage { gap: 8px; } .collage figure { border-radius: 16px; } }
+
+.ticker { overflow: hidden; border-block: 1px solid var(--line); background: var(--ink); color: var(--bg); margin-inline: -16px; }
+.ticker div { display: flex; width: max-content; padding-block: 11px; animation: slide 40s linear infinite; font: 500 13px/1 var(--mono); text-transform: uppercase; letter-spacing: .08em; }
+.ticker span { padding-right: 36px; }
+.ticker span::before { content: "✦"; color: var(--accent); margin-right: 36px; }
+@keyframes slide { to { transform: translateX(-50%); } }
+@media (min-width: 1152px) { .ticker { border-radius: 14px; margin-inline: 0; } }
+.promises { display: flex; flex-wrap: wrap; gap: 8px 20px; padding-block: 20px 28px; font-size: 14px; color: var(--muted); }
 .promises span::before { content: "✓ "; color: var(--ok); font-weight: 600; }
+.section-head { display: flex; align-items: end; justify-content: space-between; gap: 12px; padding-bottom: 14px; }
+.section-head h2 { margin: 0; font: 800 clamp(24px, 3.4vw, 32px)/1.1 var(--display); letter-spacing: -0.02em; }
+.section-head span { color: var(--muted); font-size: 14px; }
 
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 18px; padding-bottom: 56px; }
-.card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; }
-.thumb { position: relative; aspect-ratio: 1 / 1; max-width: 100%; background: var(--tile); display: grid; place-items: center; }
-.thumb img { width: 100%; height: 100%; object-fit: cover; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; transition: transform .2s, box-shadow .2s; }
+.card:hover { transform: translateY(-3px); box-shadow: 0 16px 36px -22px rgba(20, 10, 40, .5); }
+.thumb { position: relative; aspect-ratio: 1 / 1; max-width: 100%; background: var(--tile); display: grid; place-items: center; overflow: hidden; text-decoration: none; }
+.thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .35s; }
+.card:hover .thumb img { transform: scale(1.05); }
+.look { position: absolute; right: 10px; bottom: 10px; font: 600 12px/1 var(--body); background: var(--ink); color: var(--bg); border-radius: 999px; padding: 7px 11px; }
+.info h3 a { text-decoration: none; }
+.info h3 a:hover { color: var(--accent); }
 .thumb svg { width: 44%; height: 44%; stroke: var(--ink); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .thumb svg .hot { stroke: var(--accent); }
 .rank { position: absolute; top: 10px; left: 10px; font: 500 12px/1 var(--mono); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 5px 9px; }
@@ -105,7 +143,37 @@ footer .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(240
 footer details { border-bottom: 1px solid var(--line); padding-block: 10px; }
 footer summary { cursor: pointer; color: var(--ink); font-weight: 600; }
 footer p { margin: 8px 0 0; max-width: 65ch; }
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+.pd { border: 0; padding: 0; width: min(980px, calc(100% - 24px)); max-height: calc(100dvh - 24px); border-radius: 22px; background: var(--surface); color: var(--ink); box-shadow: 0 30px 80px -20px rgba(0, 0, 0, .5); overflow: auto; overscroll-behavior: contain; }
+.pd::backdrop { background: rgba(10, 8, 16, .55); backdrop-filter: blur(4px); }
+.pd-in { display: grid; position: relative; }
+.pd .x { position: absolute; top: 12px; right: 12px; z-index: 3; background: var(--surface); }
+.gal { position: relative; background: var(--tile); min-width: 0; }
+.track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; aspect-ratio: 1 / 1; }
+.track::-webkit-scrollbar { display: none; }
+.track img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: cover; scroll-snap-align: center; background: #fff; }
+.nav { position: absolute; top: 50%; translate: 0 -50%; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: color-mix(in srgb, var(--surface) 90%, transparent); color: var(--ink); font-size: 20px; line-height: 1; }
+.nav.prev { left: 10px; } .nav.next { right: 10px; }
+.thumbs { display: flex; gap: 8px; padding: 10px; overflow-x: auto; }
+.thumbs button { flex: 0 0 60px; height: 60px; padding: 0; border-radius: 12px; overflow: hidden; border: 2px solid transparent; background: #fff; }
+.thumbs button[aria-current="true"] { border-color: var(--accent); }
+.thumbs img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pd-info { padding: 22px 20px 24px; display: grid; gap: 12px; align-content: start; }
+.pd-info .tag { font: 500 12px/1 var(--mono); color: var(--cyan); text-transform: uppercase; letter-spacing: .1em; }
+.pd-info h2 { margin: 0; font: 800 clamp(26px, 3.4vw, 34px)/1.08 var(--display); letter-spacing: -0.02em; padding-right: 40px; text-wrap: balance; }
+.pd-price { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; font: 500 24px/1 var(--mono); }
+.pd-price s { color: var(--muted); font-size: 16px; }
+.pd-price .save { font: 600 13px/1 var(--body); background: color-mix(in srgb, var(--ok) 15%, transparent); color: var(--ok); border-radius: 999px; padding: 6px 10px; }
+.pd-info p { margin: 0; color: var(--muted); }
+.pd-info ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.pd-info li { display: grid; grid-template-columns: 22px 1fr; gap: 6px; }
+.pd-info li::before { content: "✓"; color: var(--ok); font-weight: 700; }
+.pd-info .add { padding: 15px 22px; font-size: 16px; width: 100%; position: sticky; bottom: 12px; z-index: 2; box-shadow: 0 10px 24px -10px var(--accent); }
+.perks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; font-size: 12px; color: var(--muted); text-align: center; }
+.perks div { border: 1px solid var(--line); border-radius: 12px; padding: 10px 6px; }
+.perks b { display: block; font-size: 18px; margin-bottom: 2px; }
+@media (min-width: 760px) { .pd-in { grid-template-columns: 1.1fr 1fr; } .pd-info { padding: 32px 28px; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>
 </head>
 <body>
@@ -119,11 +187,24 @@ footer p { margin: 8px 0 0; max-width: 65ch; }
 
 <main class="wrap" id="top">
   <section class="hero">
-    <div class="eyebrow">Trending on TikTok · updated Oct 2026</div>
-    <h1>The things your <em>For You page</em> won't stop showing you.</h1>
-    <p>Products people keep buying straight off their feeds, picked from TikTok Shop best-seller data. Ships from US warehouses, free.</p>
+    <div class="hero-copy">
+      <div class="eyebrow"><i></i>Trending on TikTok<span class="when"> · updated Oct 2026</span></div>
+      <h1>The things your <em>For You page</em> won't stop showing you.</h1>
+      <p>Products people keep buying straight off their feeds, picked from TikTok Shop best-seller data. Ships from US warehouses, free.</p>
+      <div class="cta"><a class="btn primary" href="#shop">Shop the feed →</a><a class="btn" href="#returns" id="guarantee-link">30-day money back</a></div>
+    </div>
+    <div class="collage" aria-hidden="true">
+      <figure class="p1"><img src="images/hero-1.jpg" alt="" width="720" height="900"></figure>
+      <figure class="p2"><img src="images/hero-2.jpg" alt="" width="720" height="900" loading="lazy"></figure>
+      <figure class="p3"><img src="images/hero-3.jpg" alt="" width="720" height="720" loading="lazy"></figure>
+      <span class="sticker s1"><span class="dot"></span>Free US shipping</span>
+      <span class="sticker s2">#FYP finds</span>
+      <span class="sticker s3">from $12.99</span>
+    </div>
   </section>
+  <div class="ticker" aria-hidden="true"><div id="ticker"></div></div>
   <div class="promises"><span>Free US shipping in 3–8 days</span><span>30-day money-back guarantee</span><span>Pay with PayPal, debit or credit card</span></div>
+  <div class="section-head" id="shop"><h2>Trending now</h2><span>Tap any item for a closer look</span></div>
   <section class="grid" id="grid" aria-label="Products"></section>
 </main>
 
@@ -140,6 +221,27 @@ footer p { margin: 8px 0 0; max-width: 65ch; }
   </div>
   <div class="wrap"><p>© <span id="year"></span> <span id="store-name"></span></p></div>
 </footer>
+
+<dialog class="pd" id="pd" aria-labelledby="pd-name">
+  <div class="pd-in">
+    <button class="x" type="button" id="pd-close" aria-label="Close">✕</button>
+    <div class="gal">
+      <div class="track" id="pd-track" tabindex="0" aria-label="Product photos"></div>
+      <button class="nav prev" type="button" data-step="-1" aria-label="Previous photo">‹</button>
+      <button class="nav next" type="button" data-step="1" aria-label="Next photo">›</button>
+      <div class="thumbs" id="pd-thumbs"></div>
+    </div>
+    <div class="pd-info">
+      <span class="tag" id="pd-tag"></span>
+      <h2 id="pd-name"></h2>
+      <div class="pd-price" id="pd-price"></div>
+      <p id="pd-blurb"></p>
+      <ul id="pd-points"></ul>
+      <button class="add" type="button" id="pd-add">Add to cart</button>
+      <div class="perks"><div><b>🚚</b>Free US shipping</div><div><b>↩︎</b>30-day money back</div><div><b>🔒</b>Secure PayPal checkout</div></div>
+    </div>
+  </div>
+</dialog>
 
 <div class="drawer-bg" id="drawer-bg" hidden></div>
 <aside class="drawer" id="drawer" hidden aria-label="Cart">
@@ -167,33 +269,33 @@ const STORE = {
 
 /* ===== PRODUCTS: change prices, names, or add a photo URL in `img` ===== */
 const PRODUCTS = [
-  { id: "snowy-night-light", name: "Snowy Street Lamp Night Light Kit", blurb: "Build a tiny street lamp glowing over a snow-filled scene in a clear case. Easy DIY kit with step-by-step guide and gift bag.", price: 24.99, was: 34.99, img: "images/snowy-night-light.jpg", icon: "sun" },
-  { id: "glow-drawing-board", name: "Glow-in-the-Dark Drawing Board", blurb: "Kids draw with a light pen and the picture glows, then fades for a fresh start. Large A3 board with stencils. Ages 3+.", price: 27.99, was: 39.99, img: "images/glow-drawing-board.jpg", icon: "sun" },
-  { id: "rose-speaker-lamp", name: "Glowing Rose Lamp & Bluetooth Speaker", blurb: "A pink rose with fairy lights under a glass dome, on a black base that doubles as a Bluetooth speaker.", price: 49.99, was: 69.99, img: "images/rose-speaker-lamp.jpg", icon: "sun" },
-  { id: "satin-sleep-set", name: "4-Piece Satin Sleep Set", blurb: "Champagne satin pillowcase, eye mask, scrunchie and headband. Gentle on hair and skin, gift-ready.", price: 29.99, was: 44.99, img: "images/satin-sleep-set.jpg", icon: "posture" },
-  { id: "gnome-night-light", name: "Holiday Gnome 3D Night Light", blurb: "Two glowing gnomes etched in clear acrylic on a wood-look base. Warm white, USB powered. The easy holiday gift.", price: 24.99, was: 34.99, img: "images/gnome-night-light.jpg", icon: "sun" },
-  { id: "butterfly-earrings", name: "Butterfly Ear Cuff Earrings", blurb: "Sparkly rhinestone butterflies that climb up the ear. Silver tone, comes as a pair.", price: 12.99, was: 19.99, img: "images/butterfly-earrings.jpg", icon: "chain" },
-  { id: "cat-paw-mug", name: "Cat Paw Frosted Glass Cup", blurb: "Frosted glass cup with a paw-shaped bottom and tabby stripes. For coffee, tea or milk.", price: 24.99, was: 34.99, img: "images/cat-paw-mug.jpg", icon: "cup" },
-  { id: "magsafe-powerbank", name: "Magnetic Snap-On Power Bank", blurb: "10,000mAh pack that snaps onto the back of your phone. 15W wireless and 20W wired fast charging.", price: 34.99, was: 49.99, img: "images/magsafe-powerbank.jpg", icon: "battery" },
-  { id: "fleece-tights", name: "Fleece-Lined Sheer-Look Tights", blurb: "Look like sheer tights, but lined with thick 300g fleece inside. Stretchy and warm for fall and winter.", price: 19.99, was: 29.99, img: "images/fleece-tights.jpg", icon: "posture" },
-  { id: "fuzzy-socks", name: "Fuzzy Over-the-Knee Socks", blurb: "Thick plush socks that cover your knees on cold nights. One size, stretches to fit.", price: 16.99, was: 24.99, img: "images/fuzzy-socks.jpg", icon: "posture" },
-  { id: "lip-oil", name: "Jelly Tinted Lip Oil", blurb: "Glossy, non-sticky lip oil with a sheer pink tint. Moisturizes all day. 4.8ml with a doe-foot applicator.", price: 14.99, was: 22.99, img: "images/lip-oil.jpg", icon: "cup" },
-  { id: "magnetic-lashes", name: "Magnetic Lash Kit", blurb: "Reusable magnetic lashes that clip on in seconds. No glue. One pair plus applicator.", price: 16.99, was: 26.99, img: "images/magnetic-lashes.jpg", icon: "sun" },
-  { id: "whitening-pen", name: "Teeth Whitening Pen", blurb: "Brush-on whitening gel with mint for coffee and tea stains. Twist, paint on after brushing, done.", price: 19.99, was: 29.99, img: "images/whitening-pen.jpg", icon: "scrub" },
-  { id: "coconut-perfume", name: "Warm Coconut Perfume", blurb: "Coconut, vanilla and sandalwood. The beach-vacation scent, all year.", price: 19.99, was: 29.99, img: "images/coconut-perfume.jpg", icon: "cup" },
-  { id: "face-neck-massager", name: "Face & Neck Massager", blurb: "Handheld massager with 3 modes and gentle heat for your face and neck routine. USB rechargeable.", price: 44.99, was: 69.99, img: "images/face-neck-massager.jpg", icon: "posture" },
-  { id: "rose-necklace-box", name: "Eternal Rose Necklace Gift Box", blurb: "Preserved rose in an apple-shaped box that opens to a silver love-knot necklace and card.", price: 34.99, was: 54.99, img: "images/rose-necklace-box.jpg", icon: "chain" },
-  { id: "clover-heart-necklace", name: "4-Hearts Clover Necklace", blurb: "Four magnetic hearts that click together into a clover or open into a row. Rose-gold tone.", price: 14.99, was: 24.99, img: "images/clover-heart-necklace.jpg", icon: "chain" },
-  { id: "car-charger-100w", name: "100W Retractable Car Charger", blurb: "Two built-in retractable USB-C cables plus extra ports. Up to 100W fast charging.", price: 34.99, was: 49.99, img: "images/car-charger-100w.jpg", icon: "battery" },
-  { id: "magnetic-led-cable", name: "Glowing Magnetic Charging Cable", blurb: "Light flows along the cable while it charges. Magnetic tip snaps on one-handed. USB-C.", price: 16.99, was: 24.99, img: "images/magnetic-led-cable.jpg", icon: "phone" },
-  { id: "wireless-charger-stand", name: "Foldable Magnetic Wireless Charger", blurb: "Folds flat for travel and charges your phone at up to 15W. Comes with a carry case.", price: 29.99, was: 44.99, img: "images/wireless-charger-stand.jpg", icon: "battery" },
-  { id: "garment-steamer", name: "Mini Handheld Steamer", blurb: "33W travel steamer that smooths wrinkles hanging or flat. US plug.", price: 29.99, was: 44.99, img: "images/garment-steamer.jpg", icon: "scrub" },
-  { id: "oil-sprayer", name: "Oil Mist Sprayer Bottle", blurb: "Fine mist for oil, vinegar or lemon juice. Made for air fryers and salads.", price: 16.99, was: 24.99, img: "images/oil-sprayer.jpg", icon: "cup" },
-  { id: "lint-roller", name: "Reusable Lint & Pet Hair Roller", blurb: "Rinse it under the tap instead of buying refills. Clothes, couch and car seats.", price: 19.99, was: 29.99, img: "images/lint-roller.jpg", icon: "scrub" },
-  { id: "projection-humidifier", name: "Mini Humidifier with Light Projector", blurb: "Quiet USB mist humidifier with a glowing projection light. Under 30dB.", price: 27.99, was: 39.99, img: "images/projection-humidifier.jpg", icon: "sun" },
-  { id: "bunny-night-light", name: "Squishy Bunny Night Light", blurb: "Soft silicone bunny lamp. Tap to change brightness. Doubles as a stress squish.", price: 27.99, was: 39.99, img: "images/bunny-night-light.jpg", icon: "sun" },
-  { id: "pet-hair-glove", name: "Pet Hair Remover Glove", blurb: "Pet them while you groom. Lifts loose fur from cats and dogs in a few strokes.", price: 12.99, was: 19.99, img: "images/pet-hair-glove.jpg", icon: "bag" },
-  { id: "jumping-fish-toy", name: "Flopping Fish Cat Toy", blurb: "Realistic fish that flips and wiggles when your cat touches it. USB rechargeable.", price: 19.99, was: 29.99, img: "images/jumping-fish-toy.jpg", icon: "bag" }
+  { id: "snowy-night-light", name: "Snowy Street Lamp Night Light Kit", blurb: "Build a tiny street lamp glowing over a snow-filled scene in a clear case. Easy DIY kit with step-by-step guide and gift bag.", price: 24.99, was: 34.99, img: "images/snowy-night-light.jpg", icon: "sun", photos: 3, points: ["Warm glowing lamp over a snowy scene", "Easy DIY kit with step-by-step guide", "Clear case looks great on a shelf or nightstand", "Comes with a gift bag, ready to give"] },
+  { id: "glow-drawing-board", name: "Glow-in-the-Dark Drawing Board", blurb: "Kids draw with a light pen and the picture glows, then fades for a fresh start. Large A3 board with stencils. Ages 3+.", price: 27.99, was: 39.99, img: "images/glow-drawing-board.jpg", icon: "sun", photos: 3, points: ["Large A3 glow board with light pen", "Drawings glow, then fade in about 30 minutes", "Stencils included for letters and shapes", "Screen-free fun for ages 3+"] },
+  { id: "rose-speaker-lamp", name: "Glowing Rose Lamp & Bluetooth Speaker", blurb: "A pink rose with fairy lights under a glass dome, on a black base that doubles as a Bluetooth speaker.", price: 49.99, was: 69.99, img: "images/rose-speaker-lamp.jpg", icon: "sun", photos: 3, points: ["Glowing rose with fairy lights under a glass dome", "Base doubles as a Bluetooth speaker", "Cozy night light for a bedroom or desk", "A gift for Christmas, birthdays or Valentine's Day"] },
+  { id: "satin-sleep-set", name: "4-Piece Satin Sleep Set", blurb: "Champagne satin pillowcase, eye mask, scrunchie and headband. Gentle on hair and skin, gift-ready.", price: 29.99, was: 44.99, img: "images/satin-sleep-set.jpg", icon: "posture", photos: 1, points: ["Satin pillowcase (19 x 26 in) that's gentle on hair and skin", "Eye mask blocks out light", "Matching scrunchie and headband", "Gift-ready set for her or a stocking stuffer"] },
+  { id: "gnome-night-light", name: "Holiday Gnome 3D Night Light", blurb: "Two glowing gnomes etched in clear acrylic on a wood-look base. Warm white, USB powered. The easy holiday gift.", price: 24.99, was: 34.99, img: "images/gnome-night-light.jpg", icon: "sun", photos: 3, points: ["3D gnome design that glows warm white", "Wood-look base, USB powered", "Looks great on a shelf, nightstand or desk", "An easy holiday gift or Secret Santa pick"] },
+  { id: "butterfly-earrings", name: "Butterfly Ear Cuff Earrings", blurb: "Sparkly rhinestone butterflies that climb up the ear. Silver tone, comes as a pair.", price: 12.99, was: 19.99, img: "images/butterfly-earrings.jpg", icon: "chain", photos: 4, points: ["Rhinestone butterflies in a silver tone", "Climber style that follows the curve of the ear", "Comes as a pair", "Dresses up any outfit in seconds"] },
+  { id: "cat-paw-mug", name: "Cat Paw Frosted Glass Cup", blurb: "Frosted glass cup with a paw-shaped bottom and tabby stripes. For coffee, tea or milk.", price: 24.99, was: 34.99, img: "images/cat-paw-mug.jpg", icon: "cup", photos: 4, points: ["Paw-shaped bottom that shows as you drink", "Frosted glass with orange tabby stripes", "Holds coffee, tea, milk or juice", "A sweet gift for any cat lover"] },
+  { id: "magsafe-powerbank", name: "Magnetic Snap-On Power Bank", blurb: "10,000mAh pack that snaps onto the back of your phone. 15W wireless and 20W wired fast charging.", price: 34.99, was: 49.99, img: "images/magsafe-powerbank.jpg", icon: "battery", photos: 4, points: ["Magnetic snap-on design holds to the back of compatible phones", "Wireless charging, plus a cable port for wired charging", "Slim and light enough for a pocket or small bag", "Great for travel, commutes and long days out"] },
+  { id: "fleece-tights", name: "Fleece-Lined Sheer-Look Tights", blurb: "Look like sheer tights, but lined with thick 300g fleece inside. Stretchy and warm for fall and winter.", price: 19.99, was: 29.99, img: "images/fleece-tights.jpg", icon: "posture", photos: 4, points: ["Sheer skin-tone look from the outside", "Thick 300g fleece lining keeps legs warm", "Stretchy, high-waist fit", "Footed style (Black and translucent footstep)"] },
+  { id: "fuzzy-socks", name: "Fuzzy Over-the-Knee Socks", blurb: "Thick plush socks that cover your knees on cold nights. One size, stretches to fit.", price: 16.99, was: 24.99, img: "images/fuzzy-socks.jpg", icon: "posture", photos: 3, points: ["Extra-long, over-the-knee length", "Thick, soft plush fuzz", "One size, fits foot length about 9 to 10 in", "Color: Silver Gray"] },
+  { id: "lip-oil", name: "Jelly Tinted Lip Oil", blurb: "Glossy, non-sticky lip oil with a sheer pink tint. Moisturizes all day. 4.8ml with a doe-foot applicator.", price: 14.99, was: 22.99, img: "images/lip-oil.jpg", icon: "cup", photos: 4, points: ["Glossy, non-sticky finish", "Sheer pink tint (shade 02)", "Doe-foot applicator", "4.8 ml"] },
+  { id: "magnetic-lashes", name: "Magnetic Lash Kit", blurb: "Reusable magnetic lashes that clip on in seconds. No glue. One pair plus applicator.", price: 16.99, was: 26.99, img: "images/magnetic-lashes.jpg", icon: "sun", photos: 3, points: ["No glue needed", "Includes 1 pair of lashes and an applicator clip", "Reusable", "Beginner-friendly"] },
+  { id: "whitening-pen", name: "Teeth Whitening Pen", blurb: "Brush-on whitening gel with mint for coffee and tea stains. Twist, paint on after brushing, done.", price: 19.99, was: 29.99, img: "images/whitening-pen.jpg", icon: "scrub", photos: 4, points: ["Brush-on pen, no strips or trays", "Mint, clove leaf and chrysanthemum extracts", "Use after brushing your teeth", "Pocket size"] },
+  { id: "coconut-perfume", name: "Warm Coconut Perfume", blurb: "Coconut, vanilla and sandalwood. The beach-vacation scent, all year.", price: 19.99, was: 29.99, img: "images/coconut-perfume.jpg", icon: "cup", photos: 4, points: ["Notes: coconut, vanilla, sandalwood", "Spray on wrists and neck", "Gift-ready box"] },
+  { id: "face-neck-massager", name: "Face & Neck Massager", blurb: "Handheld massager with 3 modes and gentle heat for your face and neck routine. USB rechargeable.", price: 44.99, was: 69.99, img: "images/face-neck-massager.jpg", icon: "posture", photos: 4, points: ["3 massage modes", "Gentle heat setting", "USB rechargeable", "Results vary from person to person"] },
+  { id: "rose-necklace-box", name: "Eternal Rose Necklace Gift Box", blurb: "Preserved rose in an apple-shaped box that opens to a silver love-knot necklace and card.", price: 34.99, was: 54.99, img: "images/rose-necklace-box.jpg", icon: "chain", photos: 4, points: ["Preserved rose that lasts", "Silver-tone love-knot necklace inside", "Message card included", "Gift box packaging"] },
+  { id: "clover-heart-necklace", name: "4-Hearts Clover Necklace", blurb: "Four magnetic hearts that click together into a clover or open into a row. Rose-gold tone.", price: 14.99, was: 24.99, img: "images/clover-heart-necklace.jpg", icon: "chain", photos: 3, points: ["Magnetic hearts fold into a clover", "Wear it as a clover or a row of 4 hearts", "Rose-gold tone"] },
+  { id: "car-charger-100w", name: "100W Retractable Car Charger", blurb: "Two built-in retractable USB-C cables plus extra ports. Up to 100W fast charging.", price: 34.99, was: 49.99, img: "images/car-charger-100w.jpg", icon: "battery", photos: 4, points: ["2 built-in retractable USB-C cables", "Up to 100W total fast charging", "Adjustable head", "Fits standard car 12V sockets"] },
+  { id: "magnetic-led-cable", name: "Glowing Magnetic Charging Cable", blurb: "Light flows along the cable while it charges. Magnetic tip snaps on one-handed. USB-C.", price: 16.99, was: 24.99, img: "images/magnetic-led-cable.jpg", icon: "phone", photos: 4, points: ["Flowing LED light while charging", "Magnetic tip, one-handed connect", "USB-C connector", "Colorful light"] },
+  { id: "wireless-charger-stand", name: "Foldable Magnetic Wireless Charger", blurb: "Folds flat for travel and charges your phone at up to 15W. Comes with a carry case.", price: 29.99, was: 44.99, img: "images/wireless-charger-stand.jpg", icon: "battery", photos: 5, points: ["Up to 15W wireless charging", "Foldable design", "USB-C input", "Carry case included"] },
+  { id: "garment-steamer", name: "Mini Handheld Steamer", blurb: "33W travel steamer that smooths wrinkles hanging or flat. US plug.", price: 29.99, was: 44.99, img: "images/garment-steamer.jpg", icon: "scrub", photos: 3, points: ["33W handheld steamer", "Works hanging or as a flat iron", "US plug", "Color: Light Purple"] },
+  { id: "oil-sprayer", name: "Oil Mist Sprayer Bottle", blurb: "Fine mist for oil, vinegar or lemon juice. Made for air fryers and salads.", price: 16.99, was: 24.99, img: "images/oil-sprayer.jpg", icon: "cup", photos: 4, points: ["Fine mist spray", "Works with oil, vinegar, soy sauce, lemon juice", "Easy to refill and clean", "Silver"] },
+  { id: "lint-roller", name: "Reusable Lint & Pet Hair Roller", blurb: "Rinse it under the tap instead of buying refills. Clothes, couch and car seats.", price: 19.99, was: 29.99, img: "images/lint-roller.jpg", icon: "scrub", photos: 2, points: ["Washable and reusable", "Lifts pet hair, lint and crumbs", "For clothes, bedding, sofas and car seats"] },
+  { id: "projection-humidifier", name: "Mini Humidifier with Light Projector", blurb: "Quiet USB mist humidifier with a glowing projection light. Under 30dB.", price: 27.99, was: 39.99, img: "images/projection-humidifier.jpg", icon: "sun", photos: 4, points: ["Under 30 dB quiet", "Projection night light", "USB powered", "Color: Pink"] },
+  { id: "bunny-night-light", name: "Squishy Bunny Night Light", blurb: "Soft silicone bunny lamp. Tap to change brightness. Doubles as a stress squish.", price: 27.99, was: 39.99, img: "images/bunny-night-light.jpg", icon: "sun", photos: 4, points: ["Soft, squishy silicone", "Touch control, 3 brightness levels", "Cute bedside or desk light"] },
+  { id: "pet-hair-glove", name: "Pet Hair Remover Glove", blurb: "Pet them while you groom. Lifts loose fur from cats and dogs in a few strokes.", price: 12.99, was: 19.99, img: "images/pet-hair-glove.jpg", icon: "bag", photos: 3, points: ["Gentle silicone grooming surface", "For cats and dogs", "Easy to rinse clean", "Black"] },
+  { id: "jumping-fish-toy", name: "Flopping Fish Cat Toy", blurb: "Realistic fish that flips and wiggles when your cat touches it. USB rechargeable.", price: 19.99, was: 29.99, img: "images/jumping-fish-toy.jpg", icon: "bag", photos: 2, points: ["Moves when touched", "Realistic fish design", "USB rechargeable", "No catnip version"] }
 ];
 
 const ICONS = {
@@ -216,20 +318,85 @@ try { cart = JSON.parse(localStorage.getItem("ss-cart") || "{}") || {}; } catch 
 const save = () => { try { localStorage.setItem("ss-cart", JSON.stringify(cart)); } catch (e) {} };
 const byId = (id) => PRODUCTS.find((p) => p.id === id);
 
+const photosOf = (p) => p.img ? [p.img, ...Array.from({ length: Math.max(0, (p.photos || 1) - 1) }, (_, i) => p.img.replace(/\.jpg$/, `-${i + 2}.jpg`))] : [];
+
 function renderGrid() {
   $("grid").innerHTML = PRODUCTS.map((p, i) => `
     <article class="card">
-      <div class="thumb"><span class="rank">#${i + 1} trending</span>
+      <a class="thumb" href="#p/${p.id}" aria-label="View ${p.name}"><span class="rank">#${i + 1} trending</span>
         ${p.img ? `<img src="${p.img}" alt="${p.name}" loading="lazy">` : `<svg viewBox="0 0 64 64" aria-hidden="true">${ICONS[p.icon]}</svg>`}
-      </div>
+        <span class="look">${(p.photos || 1) > 1 ? `${p.photos} photos` : "Quick look"}</span>
+      </a>
       <div class="info">
-        <h3>${p.name}</h3>
+        <h3><a href="#p/${p.id}">${p.name}</a></h3>
         <p>${p.blurb}</p>
         <div class="buy"><span class="price">${money(p.price)}<s>${money(p.was)}</s></span>
           <button class="add" type="button" data-add="${p.id}">Add to cart</button></div>
       </div>
     </article>`).join("");
+  const names = PRODUCTS.map((p) => `<span>${p.name}</span>`).join("");
+  $("ticker").innerHTML = names + names;
 }
+
+/* Product view: opens from #p/<id> links so each product has a shareable address */
+const pd = $("pd");
+let pdId = null;
+function showProduct(id) {
+  const p = byId(id); if (!p) return;
+  pdId = id;
+  const pics = photosOf(p);
+  $("pd-tag").textContent = `#${PRODUCTS.indexOf(p) + 1} trending`;
+  $("pd-name").textContent = p.name;
+  const off = Math.round((1 - p.price / p.was) * 100);
+  $("pd-price").innerHTML = `${money(p.price)}<s>${money(p.was)}</s>${off > 0 ? `<span class="save">Save ${off}%</span>` : ""}`;
+  $("pd-blurb").textContent = p.blurb;
+  $("pd-points").innerHTML = (p.points || []).map((t) => `<li>${t}</li>`).join("");
+  $("pd-track").innerHTML = pics.length ? pics.map((src, i) => `<img src="${src}" alt="${p.name}, photo ${i + 1} of ${pics.length}" draggable="false">`).join("")
+    : `<div class="thumb" style="flex:0 0 100%"><svg viewBox="0 0 64 64" aria-hidden="true">${ICONS[p.icon]}</svg></div>`;
+  $("pd-thumbs").innerHTML = pics.length > 1 ? pics.map((src, i) => `<button type="button" data-shot="${i}" aria-label="Photo ${i + 1}"${i ? "" : ' aria-current="true"'}><img src="${src}" alt=""></button>`).join("") : "";
+  $("pd-thumbs").hidden = pics.length < 2;
+  pd.querySelectorAll(".nav").forEach((b) => (b.hidden = pics.length < 2));
+  $("pd-track").scrollLeft = 0;
+  if (!pd.open) pd.showModal();
+  pd.scrollTop = 0;
+}
+function closeProduct() {
+  if (pd.open) pd.close();
+}
+pd.addEventListener("close", () => {
+  pdId = null;
+  if (location.hash.startsWith("#p/")) history.replaceState(null, "", location.pathname + location.search);
+});
+pd.addEventListener("click", (e) => { if (e.target === pd) closeProduct(); });
+$("pd-close").onclick = closeProduct;
+$("pd-add").onclick = () => { const id = pdId; closeProduct(); cart[id] = (cart[id] || 0) + 1; save(); renderCart(); openCart(true); };
+function goShot(i) {
+  const tr = $("pd-track"), n = tr.children.length;
+  i = (i + n) % n;
+  tr.scrollTo({ left: i * tr.clientWidth, behavior: "smooth" });
+}
+$("pd-track").addEventListener("scroll", () => {
+  const tr = $("pd-track"), i = Math.round(tr.scrollLeft / tr.clientWidth);
+  $("pd-thumbs").querySelectorAll("button").forEach((b, j) => b.setAttribute("aria-current", String(i === j)));
+}, { passive: true });
+pd.addEventListener("click", (e) => {
+  const b = e.target.closest("button"); if (!b) return;
+  const tr = $("pd-track"), cur = Math.round(tr.scrollLeft / tr.clientWidth);
+  if (b.dataset.step) goShot(cur + Number(b.dataset.step));
+  if (b.dataset.shot) goShot(Number(b.dataset.shot));
+});
+pd.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+    const tr = $("pd-track"), cur = Math.round(tr.scrollLeft / tr.clientWidth);
+    goShot(cur + (e.key === "ArrowRight" ? 1 : -1)); e.preventDefault();
+  }
+});
+function route() {
+  const m = location.hash.match(/^#p\/([\w-]+)/);
+  if (m && byId(m[1])) showProduct(m[1]); else closeProduct();
+}
+window.addEventListener("hashchange", route);
+$("guarantee-link").addEventListener("click", () => { $("returns").open = true; });
 
 function totals() {
   let sub = 0, n = 0;
@@ -304,7 +471,7 @@ function loadPayPal() {
 $("store-name").textContent = STORE.name;
 $("contact-email").textContent = STORE.contactEmail;
 $("year").textContent = new Date().getFullYear();
-renderGrid(); renderCart(); loadPayPal();
+renderGrid(); renderCart(); loadPayPal(); route();
 </script>
 </body>
 </html>
