@@ -303,6 +303,7 @@ footer p { margin: 8px 0 0; max-width: 65ch; }
       <label>Message<textarea name="message" required maxlength="2000"></textarea></label>
       <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
       <button class="btn primary" type="submit" style="justify-content:center">Send message</button>
+      <p class="note">This opens your email app with your message ready to send.</p>
             <p class="sent" id="contact-sent" hidden>Your email app should open now. If it doesn't, email us at the address on the left.</p>
     </form>
   </section>
@@ -612,27 +613,12 @@ $("contact-mail").href = `mailto:${STORE.contactEmail}`;
 $("copy-mail").onclick = (e) => {
   try { navigator.clipboard.writeText(STORE.contactEmail).then(() => { e.target.textContent = "Copied"; }); } catch (err) {}
 };
-$("contact-form").addEventListener("submit", async (e) => {
+$("contact-form").addEventListener("submit", (e) => {
   e.preventDefault();
-  const form = e.target, f = new FormData(form), btn = form.querySelector("[type=submit]");
+  const f = new FormData(e.target);
   const subject = `${f.get("topic")}${f.get("order") ? " (order " + f.get("order") + ")" : ""}`;
   const body = `${f.get("message")}\n\nName: ${f.get("name")}\nEmail: ${f.get("email")}${f.get("order") ? "\nOrder number: " + f.get("order") : ""}`;
-  btn.disabled = true; btn.textContent = "Sending…";
-  let sent = false;
-  try {
-    const r = await fetch(STORE.orderHelperUrl, { method: "POST", headers: { "Content-Type": "text/plain" },
-      body: JSON.stringify({ type: "contact", ...Object.fromEntries(f) }) });
-    sent = r.ok && (await r.json()).contact === true;
-  } catch (err) {}
-  btn.disabled = false; btn.textContent = "Send message";
-  if (sent) {
-    form.reset();
-    $("contact-sent").textContent = "Thanks! Your message was sent. We'll reply by email within one business day.";
-  } else {
-    // Helper unreachable: fall back to the shopper's email app.
-    location.href = `mailto:${STORE.contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    $("contact-sent").textContent = "Your email app should open now with your message. If it doesn't, email us at the address on the left.";
-  }
+  location.href = `mailto:${STORE.contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   $("contact-sent").hidden = false;
 });
 
