@@ -7,7 +7,10 @@
 // Secrets to add in Cloudflare (Settings > Variables and Secrets):
 //   PAYPAL_CLIENT_ID, PAYPAL_SECRET  - from developer.paypal.com > Apps & Credentials (Live)
 //   CJ_API_KEY                       - from CJ > Authorization > API
-//   NTFY_TOPIC (optional)            - a ntfy.sh topic name for phone alerts on each order
+//   TELEGRAM_TOKEN (optional)        - Telegram bot token from @BotFather, for phone alerts
+//   TELEGRAM_CHAT_ID (optional)      - your chat with the bot; open <worker address>/telegram-setup
+//                                      after messaging the bot to see it
+//   NTFY_TOPIC (optional)            - a ntfy.sh topic name for phone alerts (used when Telegram isn't set)
 //   NTFY_TOKEN (optional)            - a ntfy.sh access token (Account > Access tokens). Cloudflare
 //                                      shares its internet addresses between many sites, so without
 //                                      a token ntfy's free daily limit can be used up by others.
@@ -48,10 +51,35 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const ntfy = (env, body, headers) => fetch(`https://ntfy.sh/${env.NTFY_TOPIC}`, { method: "POST", body,
   headers: { ...headers, ...(env.NTFY_TOKEN ? { Authorization: `Bearer ${env.NTFY_TOKEN}` } : {}) } });
+const telegram = (env, method, body) => fetch(`https://api.telegram.org/bot${env.TELEGRAM_TOKEN}/${method}`,
+  { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
 
-async function notify(env, title, message) {
-  if (!env.NTFY_TOPIC) return;
-  try { await ntfy(env, message, { Title: title }); } catch (e) {}
+// Phone alert: Telegram when it's set up, otherwise ntfy. Returns true if the alert went out.
+async function alert(env, title, message, ntfyHeaders = {}) {
+  try {
+    if (env.TELEGRAM_TOKEN && env.TELEGRAM_CHAT_ID) {
+      const r = await telegram(env, "sendMessage", { chat_id: env.TELEGRAM_CHAT_ID, text: `${title}\n\n${message}`, disable_web_page_preview: true });
+      return { ok: r.ok, status: `telegram ${r.status}` };
+    }
+    if (env.NTFY_TOPIC) {
+      const r = await ntfy(env, message, { Title: title.replace(/[^\x20-\x7e]/g, ""), ...ntfyHeaders });
+      return { ok: r.ok, status: `ntfy ${r.status}` };
+    }
+    return { ok: false, status: "alerts not set up" };
+  } catch (e) { return { ok: false, status: e.message }; }
+}
+
+async function notify(env, title, message) { await alert(env, title, message); }
+
+// Shows the chat ID to copy into TELEGRAM_CHAT_ID (only until it is set).
+async function telegramSetup(env) {
+  const text = (t) => new Response(t, { headers: { "Content-Type": "text/plain; charset=utf-8" } });
+  if (!env.TELEGRAM_TOKEN) return text("Add the TELEGRAM_TOKEN secret first, then reload this page.");
+  if (env.TELEGRAM_CHAT_ID) return text("Telegram alerts are set up.");
+  const r = await (await telegram(env, "getUpdates", {})).json();
+  const chats = [...new Set((r.result || []).map((u) => (u.message || u.my_chat_member || {}).chat).filter(Boolean).map((c) => String(c.id)))];
+  return text(chats.length ? `Your chat ID: ${chats.join(", ")}\n\nAdd it in Cloudflare as a secret named TELEGRAM_CHAT_ID.`
+    : "No messages found. Open your bot in Telegram, tap Start (or send it any message), then reload this page.");
 }
 
 // Contact us form -> phone alert with the shopper's message and a Reply by email button.
@@ -60,13 +88,12 @@ async function handleContact(env, d) {
   if (d.website) return json({ ok: true, contact: true }); // hidden field only bots fill in
   const email = clip(d.email, 120), message = String(d.message || "").trim().slice(0, 2000);
   if (!/^[^\s,;@]+@[^\s,;@]+\.[^\s,;@]+$/.test(email) || !message) return json({ ok: false, contact: true, error: "email and message are required" }, 400);
-  if (!env.NTFY_TOPIC) return json({ ok: false, contact: true, error: "alerts not set up" }, 500);
   const order = clip(d.order, 40), topic = clip(d.topic, 60) || "Message";
   const body = `${message}\n\nFrom: ${clip(d.name, 80) || "(no name)"} <${email}>${order ? `\nOrder: ${order}` : ""}`;
   const subject = encodeURIComponent(`Re: ${topic}${order ? ` (order ${order})` : ""}`);
-  const r = await ntfy(env, `${topic}\n${body}`,
-    { Title: "New ScrollStop customer message", Tags: "email", Actions: `view, Reply by email, mailto:${email}?subject=${subject}` });
-  return r.ok ? json({ ok: true, contact: true }) : json({ ok: false, contact: true, error: `alert failed (ntfy ${r.status})` }, 502);
+  const r = await alert(env, `New customer message: ${topic}`, body,
+    { Tags: "email", Actions: `view, Reply by email, mailto:${email}?subject=${subject}` });
+  return r.ok ? json({ ok: true, contact: true }) : json({ ok: false, contact: true, error: `alert failed (${r.status})` }, 502);
 }
 
 async function paypalOrder(env, id) {
@@ -164,6 +191,7 @@ async function handleOrder(env, orderId) {
 export default {
   async fetch(request, env) {
     if (request.method === "OPTIONS") return new Response(null, { headers: cors });
+    if (request.method === "GET" && new URL(request.url).pathname === "/telegram-setup") return telegramSetup(env);
     if (request.method !== "POST") return new Response("ScrollStop order helper is running.", { headers: cors });
     let orderId = "";
     try {
