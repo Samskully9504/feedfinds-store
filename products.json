@@ -1,4 +1,32 @@
 {
+ "lava-lamp": {
+  "vid": "1468455400952172544",
+  "price": 39.99
+ },
+ "hand-warmer": {
+  "vid": "2504100431161600600",
+  "price": 29.99
+ },
+ "pompom-beanie": {
+  "vid": "54F861B1-5D64-4A21-8B24-372BD4651A8D",
+  "price": 29.99
+ },
+ "item-finder": {
+  "vid": "47C88DB0-BA65-44F3-A028-FBB780BF4267",
+  "price": 14.99
+ },
+ "heated-scarf": {
+  "vid": "1991094654539063298",
+  "price": 59.99
+ },
+ "pet-feeder": {
+  "vid": "2058795311903203332",
+  "price": 36.99
+ },
+ "pet-heating-pad": {
+  "vid": "1879735114955853826",
+  "price": 49.99
+ },
  "snowy-night-light": {
   "vid": "2410070511391608600",
   "price": 24.99
