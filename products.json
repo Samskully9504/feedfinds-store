@@ -1,4 +1,36 @@
 {
+ "mineral-advent-calendar": {
+  "vid": "1855166895524564992",
+  "price": 34.99
+ },
+ "slim-pencil-tree": {
+  "vid": "1856942536540442624",
+  "price": 169.99
+ },
+ "retro-digital-camera": {
+  "vid": "2411011237501612200",
+  "price": 89.99
+ },
+ "wireless-gaming-headset": {
+  "vid": "1870400192841572354",
+  "price": 54.99
+ },
+ "three-channel-dash-cam": {
+  "vid": "1904737490325385217",
+  "price": 99.99
+ },
+ "kids-walkie-talkies": {
+  "vid": "1879709661401624577",
+  "price": 39.99
+ },
+ "convertible-tote-backpack": {
+  "vid": "2501160802521605600",
+  "price": 39.99
+ },
+ "lash-throw-blanket": {
+  "vid": "1871370219435765761",
+  "price": 34.99
+ },
  "mini-stepper": {
   "vid": "1950363564269658114",
   "price": 79.99
