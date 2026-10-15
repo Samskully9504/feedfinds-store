@@ -1,4 +1,36 @@
 {
+ "glass-teardrop-ornaments": {
+  "vid": "1854079641628594176",
+  "price": 129.99
+ },
+ "seashell-ornaments": {
+  "vid": "1956963904836993026",
+  "price": 34.99
+ },
+ "memory-foam-topper": {
+  "vid": "1908713803133415426",
+  "price": 119.99
+ },
+ "watch-display-box": {
+  "vid": "1869565996991139840",
+  "price": 59.99
+ },
+ "scrub-brush-squeegee": {
+  "vid": "2081645588519997441",
+  "price": 29.99
+ },
+ "satin-pillowcase": {
+  "vid": "25BD69DF-E00C-4620-A136-EBCF025C27E7",
+  "price": 19.99
+ },
+ "car-drying-towel": {
+  "vid": "2407200305291612700",
+  "price": 19.99
+ },
+ "ems-foot-massager": {
+  "vid": "1903365197476966401",
+  "price": 49.99
+ },
  "flocked-spruce-tree": {
   "vid": "1966754122420609026",
   "price": 279.99
