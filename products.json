@@ -1,4 +1,36 @@
 {
+ "lit-flocked-tree": {
+  "vid": "1980168988924178434",
+  "price": 149.99
+ },
+ "egg-glass-ornaments": {
+  "vid": "1854085204877922304",
+  "price": 109.99
+ },
+ "gaming-office-chair": {
+  "vid": "1874640853694337026",
+  "price": 149.99
+ },
+ "electric-standing-desk": {
+  "vid": "1898282512027971586",
+  "price": 229.99
+ },
+ "spice-jar-set": {
+  "vid": "1849380581806067712",
+  "price": 39.99
+ },
+ "cork-ball-jars": {
+  "vid": "1957032887709093889",
+  "price": 32.99
+ },
+ "handheld-steam-cleaner": {
+  "vid": "1966066598421897218",
+  "price": 59.99
+ },
+ "cordless-car-vacuum": {
+  "vid": "1821454936048553984",
+  "price": 89.99
+ },
  "flocked-tabletop-tree": {
   "vid": "1979014272061468673",
   "price": 69.99
