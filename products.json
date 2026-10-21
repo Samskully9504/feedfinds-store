@@ -1,4 +1,40 @@
 {
+ "queen-bed-frame-usb": {
+  "vid": "1850108519681773568",
+  "price": 319.99
+ },
+ "swivel-rocker-recliner": {
+  "vid": "2034925010846613505",
+  "price": 499.99
+ },
+ "power-tower-pull-up-station": {
+  "vid": "1889966719005409281",
+  "price": 169.99
+ },
+ "mirror-jewelry-armoire": {
+  "vid": "1874635540073701378",
+  "price": 189.99
+ },
+ "seven-drawer-fabric-dresser": {
+  "vid": "1986004684234686468",
+  "price": 109.99
+ },
+ "four-ft-folding-table": {
+  "vid": "1892060510913949699",
+  "price": 99.99
+ },
+ "mobile-file-cabinet": {
+  "vid": "1964238188458401794",
+  "price": 149.99
+ },
+ "rocking-accent-chair": {
+  "vid": "2030145405651611649",
+  "price": 219.99
+ },
+ "kids-vanity-set": {
+  "vid": "1846801627391873024",
+  "price": 179.99
+ },
  "electric-fireplace-heater": {
   "vid": "1892086152427520003",
   "price": 279.99
