@@ -103,7 +103,8 @@ async function paypalOrder(env, id) {
   }).then((r) => r.json());
   if (!t.access_token) throw new Error("PayPal login failed: check PAYPAL_CLIENT_ID and PAYPAL_SECRET");
   const r = await fetch(`https://api-m.paypal.com/v2/checkout/orders/${encodeURIComponent(id)}`, { headers: { Authorization: `Bearer ${t.access_token}` } });
-  if (!r.ok) throw new Error(`PayPal order ${id} not found`);
+  if (r.status === 404) throw Object.assign(new Error(`PayPal order ${id} not found`), { notFound: true });
+  if (!r.ok) throw new Error(`PayPal order ${id} could not be read (PayPal ${r.status})`);
   return r.json();
 }
 
@@ -193,16 +194,24 @@ export default {
     if (request.method === "OPTIONS") return new Response(null, { headers: cors });
     if (request.method === "GET" && new URL(request.url).pathname === "/telegram-setup") return telegramSetup(env);
     if (request.method !== "POST") return new Response("ScrollStop order helper is running.", { headers: cors });
+    // Bots and scanners post random junk here (for example "address=0x..." crypto-wallet forms).
+    // Anything that isn't JSON from our site, or has no real-looking PayPal order ID, is turned
+    // away quietly so it never sends you an alert.
+    let data;
+    try { data = JSON.parse(await request.text()); } catch (e) { return json({ ok: false, error: "bad request" }, 400); }
+    if (!data || typeof data !== "object") return json({ ok: false, error: "bad request" }, 400);
     let orderId = "";
     try {
-      const data = await request.json();
       if (data.type === "contact") return await handleContact(env, data);
       orderId = String(data.orderID || "").slice(0, 40);
-      if (!/^[A-Z0-9]+$/.test(orderId)) return json({ ok: false, error: "missing order ID" }, 400);
+      // PayPal order IDs are 17 letters/numbers, e.g. 6HF03575R8418433A.
+      if (!/^[A-Z0-9]{10,30}$/.test(orderId)) return json({ ok: false, error: "missing order ID" }, 400);
       const r = await handleOrder(env, orderId);
       await notify(env, "New order sent to CJ", `PayPal ${orderId}: ${r.items.map((i) => `${i.qty}x ${i.id}`).join(", ")}. ${r.cjOrders > 1 ? `Split into ${r.cjOrders} CJ orders. ` : ""}Open CJ > My Orders and tap Pay.`);
       return json({ ok: true });
     } catch (e) {
+      // A made-up order ID that PayPal has never heard of isn't a sale, so no alert for it.
+      if (e.notFound) return json({ ok: false, error: e.message }, 404);
       await notify(env, "Order NOT sent to CJ", `PayPal ${orderId}: ${e.message}. Place this one by hand from the PayPal email.`);
       return json({ ok: false, error: e.message }, 500);
     }
