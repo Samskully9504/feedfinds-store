@@ -757,7 +757,10 @@ $("q-clear").onclick = () => { view.q = ""; $("q").value = ""; renderGrid(); $("
 $("sort").onchange = (e) => { view.sort = e.target.value; renderGrid(); };
 $("chips").addEventListener("click", (e) => { const b = e.target.closest("[data-cat]"); if (b) { view.cat = b.dataset.cat; renderGrid(); } });
 $("grid").addEventListener("click", (e) => { if (e.target.id === "reset-filters") resetFilters(); });
-{ const names = PRODUCTS.map((p) => `<span>${p.name}</span>`).join(""); $("ticker").innerHTML = names + names; }
+{ const names = PRODUCTS.map((p) => `<span>${p.name}</span>`).join(""); const t = $("ticker"); t.innerHTML = names + names;
+  // Keep a steady, readable speed (about 40 pixels a second) however many products there are.
+  const setSpeed = () => { t.style.animationDuration = `${Math.max(40, t.scrollWidth / 2 / 40)}s`; };
+  setSpeed(); addEventListener("load", setSpeed); }
 const setBarH = () => document.documentElement.style.setProperty("--bar-h", document.querySelector(".bar").offsetHeight + "px");
 setBarH(); window.addEventListener("resize", setBarH);
 
